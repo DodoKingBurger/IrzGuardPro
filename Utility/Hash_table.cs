@@ -16,7 +16,12 @@ namespace IrzGuardPro.Utility
         /// </summary>
         private static string mainDir = FileSystem.Current.AppDataDirectory;
 
-
+        /// <summary>
+        /// Возвращает строку по названию файла.
+        /// </summary>
+        /// <param name="key">Имя файла.</param>
+        /// <returns>Строка внутри файла.</returns>
+        /// <exception cref="ArgumentException">Названия файла null.</exception>
         public static string GetString(string key)
         {
             if (!string.IsNullOrEmpty(key))
@@ -30,23 +35,37 @@ namespace IrzGuardPro.Utility
                 if (!string.IsNullOrEmpty(contents))
                     return contents;
                 else
-                    throw new ArgumentException($"{contents} - string is null or empty.");
+                    return "---";
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
         }
 
-        public static async void SetString(string key, string value)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">Имя файла.</param>
+        /// <param name="value">Значения передаваймая в файл.</param>
+        /// <exception cref="ArgumentException">value или key null</exception>
+        /// <exception cref="FileLoadException">Файл не получилось перезаписать.</exception>
+        public static void SetString(string key, string value)
         {
             if (!string.IsNullOrEmpty(key))
             {
                 if (!string.IsNullOrEmpty(value)) 
                 {
+                    FileStream stream;
                     if (!File.Exists(Path.Combine(mainDir, key)))
-                        File.Create(Path.Combine(mainDir, key));
-                    using var stream = File.OpenRead(Path.Combine(mainDir, key));
-                    using var writer = new StreamWriter(stream);
-                    await writer.WriteAsync($"{value}");
+                        stream = File.Create(Path.Combine(mainDir, key));
+                    else
+                        stream = File.OpenWrite(Path.Combine(mainDir, key));
+                    if (stream.CanWrite)
+                    {
+                        using var writer = new StreamWriter(stream);
+                        writer.WriteLine($"{value}");
+                    }
+                    else
+                        throw new FileLoadException("Файл не получилось перезаписать.");
                 }
                 else
                     throw new ArgumentException($"{value} - string is null or empty.");
@@ -56,6 +75,12 @@ namespace IrzGuardPro.Utility
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">Имя файла.</param>
+        /// <returns>Число внутри файла.</returns>
+        /// <exception cref="ArgumentException">Названия файла null.</exception>
         public static int GetInt(string key)
         {
             if (!string.IsNullOrEmpty(key))
@@ -68,23 +93,31 @@ namespace IrzGuardPro.Utility
                 if (int.TryParse(reader.ReadToEnd(), out var contents))
                     return contents;
                 else
-                    throw new ArgumentException($"{contents} - can't convert to number.");
+                    return -1;
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
         }
 
-        public static async void SetInt(string key, int value)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">Имя файла.</param>
+        /// <param name="value">Значения передаваймая в файл.</param>
+        /// <exception cref="ArgumentException">value или key null</exception>
+        public static void SetInt(string key, int value)
         {
             if (!string.IsNullOrEmpty(key))
             {
+                FileStream stream;
                 if (!File.Exists(Path.Combine(mainDir, key)))
-                    File.Create(Path.Combine(mainDir, key));
-                if (!value.Equals(null))
+                    stream = File.Create(Path.Combine(mainDir, key));
+                else
+                    stream = File.OpenWrite(Path.Combine(mainDir, key));
+                if (!value.Equals(null) && stream.CanWrite)
                 {
-                    using var stream = File.OpenWrite(Path.Combine(mainDir, key));
                     using var writer = new StreamWriter(stream);
-                    await writer.WriteAsync($"{value}");
+                    writer.WriteLine($"{value}");
                 }
                 else
                     throw new ArgumentException($"{value} - int is null.");

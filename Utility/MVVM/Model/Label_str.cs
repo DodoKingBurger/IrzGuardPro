@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro.MVVM.Model
+namespace IrzGuardPro.Utility.MVVM.Model
 {
     public class Label_str
     {

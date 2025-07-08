@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro
+namespace IrzGuardPro.Page
 {
     class InfoDevicePage : ContentPage
     {
@@ -13,7 +13,7 @@ namespace IrzGuardPro
             Title = "Accsess";
             Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
 
-            System.Text.StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
             sb.AppendLine($"Model:{DeviceInfo.Current.Model}");
             sb.AppendLine($"Manufacturer:{DeviceInfo.Current.Manufacturer}");
@@ -33,7 +33,7 @@ namespace IrzGuardPro
 
             Label label = new Label { Text = sb.ToString() };
 
-            /// переход с обычной странницы назад
+            // переход с обычной странницы назад
             backButton.Clicked += async (o, e) => await Navigation.PopAsync(true);
             Content = new StackLayout { Children = { label, backButton } };
         }

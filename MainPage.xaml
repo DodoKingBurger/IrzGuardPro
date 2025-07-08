@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:IrzGuardPro.Utility.MVVM.ViewModel"
              x:Class="IrzGuardPro.MainPage">
+  <ContentPage.BindingContext>
+    <viewmodel:LabelViewModel/>
+  </ContentPage.BindingContext>
   <ScrollView>
+    
     <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -11,24 +16,19 @@
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
-      <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" 
+      <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
               SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
-        <Picker.Items>
-          <x:String>Администратор</x:String>
-          <x:String>Мастер</x:String>
-          <x:String>Электромонтер</x:String>
-        </Picker.Items>
       </Picker>
       <Label
                 x:Name="LabelCodePassFuture"
-                Text="---"
+                Text = "{Binding Name_Future}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="28"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
       <Label
                 x:Name="LabelCodePass"
-                Text="---"
+                Text="{Binding Name_Now}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
@@ -36,7 +36,7 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
       <Label
                 x:Name="LabelCodePassPast"
-                Text= "---"
+                Text= "{Binding Name_Past}"
                 FontSize="28"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
@@ -45,14 +45,14 @@
       <Button
                 x:Name="InvateBtn"
                 Text="Ключ доступа." 
-                SemanticProperties.Hint="go to common page "
+                SemanticProperties.Hint="go to Invate page "
                 Clicked="ToInvateBtnPage"
                 HorizontalOptions="Fill" />
 
       <Button
-                x:Name="Access"
-                Text="Access" 
-                SemanticProperties.Hint="go to Access page "
+                x:Name="InfoDeviceBtn"
+                Text="Информация об устройстве" 
+                SemanticProperties.Hint="go to InfoDevice page "
                 Clicked="ToInfoDevicePage"
                 HorizontalOptions="Fill" />
 

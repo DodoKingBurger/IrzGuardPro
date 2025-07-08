@@ -1,4 +1,4 @@
-﻿using IrzGuardPro.MVVM.Model;
+﻿using IrzGuardPro.Utility.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,13 +7,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro.MVVM.ViewModel
+namespace IrzGuardPro.Utility.MVVM.ViewModel
 {
     public class LabelViewModel : INotifyPropertyChanged
     {
-        Label_str label = new Label_str { Now = "00:00:00 - ---",
-            Past = "00:00:00 - ---",
-            Future = "00:00:00 - ---"
+        public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
+
+        public Label_str label = new Label_str { Now = "00:00:00 - ---",
+            Past = "00:00 - ---",
+            Future = "00:00 - ---"
         };
         
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,7 +25,7 @@ namespace IrzGuardPro.MVVM.ViewModel
             get => label.Past; 
             set
             {
-                if (!string.IsNullOrEmpty(value) && label.Past != value)
+                if (!string.IsNullOrEmpty(value) && !label.Past.Equals(value))
                 {
                     label.Past = value;
                     OnPropertyChanged();
@@ -35,7 +37,7 @@ namespace IrzGuardPro.MVVM.ViewModel
             get => label.Now;
             set
             {
-                if (!string.IsNullOrEmpty(value) && label.Now != value)
+                if (!string.IsNullOrEmpty(value) && !label.Past.Equals(value))
                 {
                     label.Now = value;
                     OnPropertyChanged();
@@ -47,7 +49,7 @@ namespace IrzGuardPro.MVVM.ViewModel
             get => label.Future;
             set
             {
-                if (!string.IsNullOrEmpty(value) && label.Future != value)
+                if (!string.IsNullOrEmpty(value) && !label.Past.Equals(value))
                 {
                     label.Future = value;
                     OnPropertyChanged();
