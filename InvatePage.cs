@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace IrzGuardPro
 {
-    class CommonPage : ContentPage
+    class InvatePage : ContentPage
     {
-        public CommonPage() 
+        public InvatePage() 
         {
-            Title = "Common";
+            Title = "Invate";
             Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
-            Label label = new Label { Text = "CommonPage"};
+            Label label = new Label { Text = "InvatePage" };
 
             /// переход с обычной странницы назад
             backButton.Clicked += async (o, e) => await Navigation.PopAsync(true);
