@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:IrzGuardPro.MVVM.ViewModel"
+             x:Class="IrzGuardPro.MVVM.View.InvatePage"
+             Title="InvatePage">
+  <ContentPage.BindingContext>
+    <viewmodel:InvateViewModel/>
+  </ContentPage.BindingContext>
+  <VerticalStackLayout>
+    <ScrollView>
+
+      <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+        <Image
+                Source="irz.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+        <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+              SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
+        </Picker>
+        <Label
+                x:Name="LabelReferenceCode"
+                Text = "{Binding  Invate_str}"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="35"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+        <Button
+                x:Name="BackMainBtn"
+                Text="Назад" 
+                SemanticProperties.Hint="go to Invate page "
+                Clicked="ToBackMainPage"
+                HorizontalOptions="Fill" />
+      </VerticalStackLayout>
+    </ScrollView>
+  </VerticalStackLayout>
+</ContentPage>

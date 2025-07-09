@@ -1,4 +1,4 @@
-﻿using IrzGuardPro.Utility.MVVM.Model;
+﻿using IrzGuardPro.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro.Utility.MVVM.ViewModel
+namespace IrzGuardPro.MVVM.ViewModel
 {
-    public class LabelViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
 

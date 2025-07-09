@@ -1,6 +1,6 @@
-﻿using IrzGuardPro.Page;
+﻿using IrzGuardPro.MVVM.View;
+using IrzGuardPro.MVVM.ViewModel;
 using IrzGuardPro.Utility;
-using IrzGuardPro.Utility.MVVM.ViewModel;
 using System;
 using System.Security.AccessControl;
 
@@ -17,19 +17,9 @@ namespace IrzGuardPro
         //IDispatcherTimer timer_hour = Application.Current.Dispatcher.CreateTimer();
 
         /// <summary>
-        /// Время -1 час от нынешнего времни.
-        /// </summary>
-        DateTime dateTime_Past = new();
-
-        /// <summary>
-        /// Время +1 час от нынешнего времни.
-        /// </summary>
-        DateTime dateTime_Future = new();
-
-        /// <summary>
         /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
         /// </summary>
-        public LabelViewModel labelViewModel = new LabelViewModel();
+        public MainViewModel labelViewModel = new MainViewModel();
 
         #endregion
 
@@ -43,26 +33,17 @@ namespace IrzGuardPro
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                DateTime dateTime = DateTime.Now;
-
                 int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
+                DateTime dateTime = DateTime.Now;
+                DateTime dateTime_Past = dateTime.AddHours(-1);
+                DateTime dateTime_Future = dateTime.AddHours(1);
 
+                labelViewModel.Name_Future = $"{dateTime_Future.Hour}:00 - " +
+                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Future))}";
+                labelViewModel.Name_Past = $"{dateTime_Past.Hour}:00 - " +
+                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Past))}";
                 labelViewModel.Name_Now = $"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}", dateTime.Second)} - " +
                     $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))}";
-
-                if (this.dateTime_Future != dateTime.AddHours(1))
-                {
-                    this.dateTime_Future = dateTime.AddHours(1);
-                    labelViewModel.Name_Future = $"{this.dateTime_Future.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Future))}";
-                }
-
-                if (this.dateTime_Past != dateTime.AddHours(-1)) 
-                {
-                    this.dateTime_Past = dateTime.AddHours(-1);
-                    labelViewModel.Name_Past = $"{this.dateTime_Past.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Past))}";
-                }
 
                 /*if(this.dateTime_Future != dateTime.AddHours(1)) 
                 {
@@ -114,7 +95,8 @@ namespace IrzGuardPro
         /// <param name="e"></param>
         private void ComboBox_AccessLevel_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            Hash_table.SetInt("ConfigFile.txt", ComboBox_AccessLevel.SelectedIndex);
+            if (sender is Picker)
+                Hash_table.SetInt("ConfigFile.txt", ((Picker)sender).SelectedIndex);
         }
 
         #endregion

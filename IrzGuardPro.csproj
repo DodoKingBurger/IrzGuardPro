@@ -63,7 +63,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Page\InvatePage.xaml.cs">
+	  <Compile Update="MVVM\View\InvatePage.xaml.cs">
 	    <DependentUpon>InvatePage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Properties\Resources.Designer.cs">
@@ -81,7 +81,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Page\InvatePage.xaml">
+	  <MauiXaml Update="MVVM\View\InvatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

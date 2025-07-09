@@ -1,10 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro.Page
+namespace IrzGuardPro.MVVM.View
 {
     class InfoDevicePage : ContentPage
     {
@@ -28,6 +29,16 @@ namespace IrzGuardPro.Page
                 DeviceType.Virtual => true,
                 _ => false,
             };
+
+
+            string deviceID = "";
+            
+        #if ANDROID
+             deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+
+        #elif IOS
+            deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
+        #endif
 
             sb.AppendLine($"Virtual device? {isVirtual}");
 
