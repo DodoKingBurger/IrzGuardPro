@@ -49,12 +49,12 @@
                 Clicked="ToInvateBtnPage"
                 HorizontalOptions="Fill" />
 
-      <Button
+      <!--<Button
                 x:Name="InfoDeviceBtn"
                 Text="Информация об устройстве" 
                 SemanticProperties.Hint="go to InfoDevice page "
                 Clicked="ToInfoDevicePage"
-                HorizontalOptions="Fill" />
+                HorizontalOptions="Fill" />-->
 
     </VerticalStackLayout>
   </ScrollView>

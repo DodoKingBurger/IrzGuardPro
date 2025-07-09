@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="IrzGuardPro.AppShell"
+    x:Class="IrzGuardPro.AppSecurity"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:IrzGuardPro"
+    xmlns:local="clr-namespace:IrzGuardPro.MVVM.View"
     Shell.FlyoutBehavior="Disabled"
     Title="IrzGuardPro">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+  <ShellContent
+        Title="Main"
+        ContentTemplate="{DataTemplate local:SecurityPage}"
         Route="MainPage" />
 
 </Shell>

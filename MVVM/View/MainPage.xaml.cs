@@ -31,7 +31,9 @@ namespace IrzGuardPro
         /// </summary>
         private void ViewCodePass() 
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            //MainThread.BeginInvokeOnMainThread(() =>
+            //{
+            try
             {
                 int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
                 DateTime dateTime = DateTime.Now;
@@ -44,6 +46,13 @@ namespace IrzGuardPro
                         $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Past))}";
                 labelViewModel.Name_Now = $"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}", dateTime.Second)} - " +
                     $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))}";
+            }
+            catch (Exception ex) 
+            {
+                DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes","No");
+            }
+                
+
 
                 /*if(this.dateTime_Future != dateTime.AddHours(1)) 
                 {
@@ -65,7 +74,7 @@ namespace IrzGuardPro
                 LabelCodePass.LoadFromXaml($"<Label Text =\"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}",dateTime.Second)} - " +
                     $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))} \" />");*/
 
-            });
+            //});
         }
 
         /// <summary>
@@ -73,10 +82,10 @@ namespace IrzGuardPro
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void ToInfoDevicePage(object? sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new InfoDevicePage());
-        }
+        //private async void ToInfoDevicePage(object? sender, EventArgs e)
+        //{
+        //    await Navigation.PushAsync(new SecurityPage());
+        //}
 
         /// <summary>
         /// Переход к страничке с реферальным кодом.
@@ -99,14 +108,11 @@ namespace IrzGuardPro
                 Hash_table.SetInt("ConfigFile.txt", ((Picker)sender).SelectedIndex);
         }
 
-        #endregion
-
-        #region Констуркторы 
-
-        public MainPage()
+        /// <summary>
+        /// Загрузка страницы.
+        /// </summary>
+        private void LoadPage() 
         {
-            InitializeComponent();
-
             BindingContext = labelViewModel;
             ComboBox_AccessLevel.ItemsSource = labelViewModel.ListLevelAccess;
             ComboBox_AccessLevel.SelectedIndex = Hash_table.GetInt("ConfigFile.txt");
@@ -117,6 +123,16 @@ namespace IrzGuardPro
             timer_minute.Tick += (s, e) => ViewCodePass();
             timer_minute.Start();
             //ViewCodePass();
+        }
+
+        #endregion
+
+        #region Констуркторы 
+
+        public MainPage()
+        {
+            InitializeComponent();
+            LoadPage();
         }
 
         #endregion

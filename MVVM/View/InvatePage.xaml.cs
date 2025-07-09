@@ -100,7 +100,6 @@ public partial class InvatePage : ContentPage
 
     public InvatePage()
 	{
-
         InitializeComponent();
         LoadPage();
     }
@@ -117,6 +116,4 @@ public partial class InvatePage : ContentPage
     //}
 
     #endregion
-
-
 }
