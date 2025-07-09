@@ -8,6 +8,6 @@ namespace IrzGuardPro.MVVM.Model
 {
     public class SecurityModel
     {
-        public string Code {  get; set; }
+        public string Code { get; set; } = "0000";
     }
 }

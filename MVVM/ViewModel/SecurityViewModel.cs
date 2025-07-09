@@ -13,7 +13,7 @@ namespace IrzGuardPro.MVVM.ViewModel
     {        
         public event PropertyChangedEventHandler? PropertyChanged;
         
-        public SecurityModel model { get; set; }
+        public SecurityModel model = new SecurityModel();
 
         public string Password
         {

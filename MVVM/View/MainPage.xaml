@@ -44,7 +44,7 @@
 
       <Button
                 x:Name="InvateBtn"
-                Text="Ключ доступа." 
+                Text="Пригласи коллегу" 
                 SemanticProperties.Hint="go to Invate page "
                 Clicked="ToInvateBtnPage"
                 HorizontalOptions="Fill" />

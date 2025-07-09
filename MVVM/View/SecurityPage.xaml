@@ -19,6 +19,11 @@
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
         <Label
+                Text = "Сообщите нам данный код:"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="35" />
+        <Label
                 x:Name="LabelCode"
                 Text = "{Binding Password}"
                 Style="{StaticResource SubHeadline}"
