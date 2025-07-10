@@ -17,7 +17,7 @@
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+                SemanticProperties.Description="ИРЗ эмблема." />
         <Label
                 Text = "Сообщите нам данный код:"
                 Style="{StaticResource SubHeadline}"
@@ -25,12 +25,15 @@
                 FontSize="35" />
         <Label
                 x:Name="LabelCode"
-                Text = "{Binding Password}"
+                Text = "{Binding Label_code}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-        <Entry Placeholder="Введите код доступа" FontFamily="Helvetica" 
+                SemanticProperties.Description="Код для проверки доступа." />
+        <Entry 
+               x:Name="EntryBox_code" Keyboard="Numeric"
+               TextChanged="EntryBox_code_TextChanged"
+               Placeholder="Введите код доступа" FontFamily="Helvetica" 
                FontSize="28" MaxLength="4"/>
         <Button
                 x:Name="CheckCodePass"

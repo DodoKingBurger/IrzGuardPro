@@ -33,7 +33,7 @@ namespace IrzGuardPro.Utility
                 var contents = reader.ReadToEnd();
 
                 if (!string.IsNullOrEmpty(contents))
-                    return contents;
+                    return contents.Trim();
                 else
                     return "---";
             }
@@ -52,23 +52,18 @@ namespace IrzGuardPro.Utility
         {
             if (!string.IsNullOrEmpty(key))
             {
-                if (!string.IsNullOrEmpty(value)) 
+                FileStream stream;
+                if (!File.Exists(Path.Combine(mainDir, key)))
+                    stream = File.Create(Path.Combine(mainDir, key));
+                else
+                    stream = File.OpenWrite(Path.Combine(mainDir, key));
+                if (!string.IsNullOrEmpty(value) && stream.CanWrite)
                 {
-                    FileStream stream;
-                    if (!File.Exists(Path.Combine(mainDir, key)))
-                        stream = File.Create(Path.Combine(mainDir, key));
-                    else
-                        stream = File.OpenWrite(Path.Combine(mainDir, key));
-                    if (stream.CanWrite)
-                    {
-                        using var writer = new StreamWriter(stream);
-                        writer.WriteLine($"{value}");
-                    }
-                    else
-                        throw new FileLoadException("Файл не получилось перезаписать.");
+                    using var writer = new StreamWriter(stream);
+                    writer.WriteLine($"{value}");
                 }
                 else
-                    throw new ArgumentException($"{value} - string is null or empty.");
+                    throw new ArgumentException($"{value} - int is null.");
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
@@ -124,6 +119,26 @@ namespace IrzGuardPro.Utility
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
+        }
+
+        /// <summary>
+        /// Созадет файл.
+        /// </summary>
+        /// <param name="key"></param>
+        public static void CreateFile(string key) 
+        {
+            if(!File.Exists(Path.Combine(mainDir, key)))
+                File.Create(Path.Combine(mainDir, key));
+        }
+
+        /// <summary>
+        /// проверяет существует ли файл.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool Exists(string key) 
+        {
+            return File.Exists(Path.Combine(mainDir, key));
         }
     }
 }

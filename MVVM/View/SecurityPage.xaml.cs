@@ -17,6 +17,16 @@ public partial class SecurityPage : ContentPage
 {
     #region Поля и свойства
 
+    /// <summary>
+    /// Таймер.
+    /// </summary>
+    IDispatcherTimer timer_Load_Main = Application.Current.Dispatcher.CreateTimer();
+
+
+
+    /// <summary>
+    /// ViewModel.
+    /// </summary>
     SecurityViewModel security = new SecurityViewModel();
 
     #endregion
@@ -30,25 +40,86 @@ public partial class SecurityPage : ContentPage
     /// <param name="e"></param>
     private void CheckingCodePass(object? sender, EventArgs e)
     {
-        App.Current.MainPage = new AppShell();
+        try
+        {
+            if (RSAcrypt.EqualsKey(EntryBox_code.Text))
+            {
+                if (!Hash_table.Exists("UniqueKey.config"))
+                    Hash_table.CreateFile("UniqueKey.config");
+                Hash_table.SetString("UniqueKey.config", RSAcrypt.Encrypt(GetCodeDevice()));
+                App.Current.MainPage = new AppShell();
+            }
+            else
+            {
+                EntryBox_code.TextColor = Colors.Red;
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Ошибка",ex.Message,"OK");
+        }
     }
 
+    private void EntryBox_code_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        EntryBox_code.TextColor = Colors.Black;
+    }
 
-    private void LoadPage() 
+    /// <summary>
+    /// Проверка верификационного файла.
+    /// </summary>
+    /// <returns>True, если файл был найден и его содержимое совпадает с ключом.</returns>
+    public bool ExistsVerificationFile()
+    {
+        try
+        {
+            if (Hash_table.Exists("UniqueKey.config"))
+            {
+                if (RSAcrypt.EqualsKey(Hash_table.GetString("UniqueKey.config"),RSAcrypt.Encrypt(GetCodeDevice())))
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+                return false;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Получения кода устройства взависимости от платформы.
+    /// </summary>
+    /// <returns>Код устройства.</returns>
+    static public string GetCodeDevice()
     {
         string deviceID = "0000 0000 0000 0000";
 #if ANDROID
-                     deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-
+        deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
 #elif IOS
-                    deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
+        deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
 #elif WINDOWS
-                    deviceID = NetworkInterface.GetAllNetworkInterfaces()
-                        .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                        .Select(nic => nic.GetPhysicalAddress().ToString())
-                        .FirstOrDefault();
+        deviceID = NetworkInterface.GetAllNetworkInterfaces()
+                                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                                .Select(nic => nic.GetPhysicalAddress().ToString())
+                                .FirstOrDefault();
 #endif
-        security.Password = RSAcrypt.Encrypt(deviceID);
+        return deviceID;
+    }
+
+    /// <summary>
+    /// Загрузка страницы.
+    /// </summary>
+    private void LoadPage()
+    {
+        if (ExistsVerificationFile())
+        {
+            App.Current.MainPage = new AppShell();
+            timer_Load_Main.Stop();
+        }
     }
 
     #endregion
@@ -56,12 +127,21 @@ public partial class SecurityPage : ContentPage
     #region Конструкторы 
 
     public SecurityPage()
-	{
-		InitializeComponent();
-        LoadPage();
+	{                   
+        InitializeComponent();
+        security.Password = RSAcrypt.Encrypt(GetCodeDevice());
+        LabelCode.Text = security.Password;
+
+        timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
+        //timer_hour.Interval = TimeSpan.FromHours(1);
+
+        timer_Load_Main.Tick += (s, e) => LoadPage();
+        timer_Load_Main.Start();
     }
 
     #endregion
+
+    #region NOT USED
     //        Title = "Accsess";
     //        Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
 
@@ -103,4 +183,6 @@ public partial class SecurityPage : ContentPage
 
     // переход с обычной странницы назад
     //backButton.Clicked += async (o, e) => await Navigation.PopAsync(true);
+    #endregion
+
 }

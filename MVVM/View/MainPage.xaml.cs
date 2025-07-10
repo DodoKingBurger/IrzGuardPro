@@ -14,6 +14,7 @@ namespace IrzGuardPro
         /// Таймер.
         /// </summary>
         IDispatcherTimer timer_minute = Application.Current.Dispatcher.CreateTimer();
+
         //IDispatcherTimer timer_hour = Application.Current.Dispatcher.CreateTimer();
 
         /// <summary>
@@ -37,44 +38,53 @@ namespace IrzGuardPro
             {
                 int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
                 DateTime dateTime = DateTime.Now;
+
                 DateTime dateTime_Past = dateTime.AddHours(-1);
                 DateTime dateTime_Future = dateTime.AddHours(1);
 
-                labelViewModel.Name_Future = $"{dateTime_Future.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Future))}";
-                labelViewModel.Name_Past = $"{dateTime_Past.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Past))}";
-                labelViewModel.Name_Now = $"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}", dateTime.Second)} - " +
-                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))}";
+                labelViewModel.DateTime_Create_Now = dateTime;
+                labelViewModel.DateTime_Create_Past = dateTime_Past;
+                labelViewModel.DateTime_Create_Future = dateTime_Future;
+
+                labelViewModel.Password_Future = Guard.GeneratePass(save_LevelAccess, dateTime_Future);
+                labelViewModel.Password_Now = Guard.GeneratePass(save_LevelAccess, dateTime);
+                labelViewModel.Password_Past = Guard.GeneratePass(save_LevelAccess, dateTime_Past);
+
+                //labelViewModel.Name_Future = $"{dateTime_Future.Hour}:00 - " +
+                //        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Future))}";
+                //labelViewModel.Name_Past = $"{dateTime_Past.Hour}:00 - " +
+                //        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Past))}";
+                //labelViewModel.Name_Now = $"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}", dateTime.Second)} - " +
+                //    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))}";
             }
             catch (Exception ex) 
             {
                 DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes","No");
             }
-                
 
-
-                /*if(this.dateTime_Future != dateTime.AddHours(1)) 
-                {
-                    this.dateTime_Future = dateTime.AddHours(1);
-                    //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-                    LabelCodePassPast.LoadFromXaml($"<Label Text =\"{this.dateTime_Past.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Past))} \"/>");
-                }
-
-                if (this.dateTime_Past != dateTime.AddHours(-1)) 
-                {
-                    this.dateTime_Past = dateTime.AddHours(-1);
-                    //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-                    LabelCodePassFuture.LoadFromXaml($"<Label Text =\"{this.dateTime_Future.Hour}:00 - " +
-                        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Future))} \" />");
-                }
-
+            #region NOT USED
+            /*if(this.dateTime_Future != dateTime.AddHours(1)) 
+            {
+                this.dateTime_Future = dateTime.AddHours(1);
                 //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-                LabelCodePass.LoadFromXaml($"<Label Text =\"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}",dateTime.Second)} - " +
-                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))} \" />");*/
+                LabelCodePassPast.LoadFromXaml($"<Label Text =\"{this.dateTime_Past.Hour}:00 - " +
+                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Past))} \"/>");
+            }
+
+            if (this.dateTime_Past != dateTime.AddHours(-1)) 
+            {
+                this.dateTime_Past = dateTime.AddHours(-1);
+                //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
+                LabelCodePassFuture.LoadFromXaml($"<Label Text =\"{this.dateTime_Future.Hour}:00 - " +
+                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Future))} \" />");
+            }
+
+            //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
+            LabelCodePass.LoadFromXaml($"<Label Text =\"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}",dateTime.Second)} - " +
+                $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))} \" />");*/
 
             //});
+            #endregion
         }
 
         /// <summary>

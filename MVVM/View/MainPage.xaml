@@ -15,32 +15,33 @@
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+                SemanticProperties.Description="ИРЗ эмблема" />
       <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+              SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
               SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
       </Picker>
       <Label
                 x:Name="LabelCodePassFuture"
-                Text = "{Binding Name_Future}"
+                Text = "{Binding Label_str_Future}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="28"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Код доступа для будуйщего часа." />
       <Label
                 x:Name="LabelCodePass"
-                Text="{Binding Name_Now}"
+                Text="{Binding Label_str_Now}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
                 TextColor="Green"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Код доступа на текущий момент." />
       <Label
                 x:Name="LabelCodePassPast"
-                Text= "{Binding Name_Past}"
+                Text= "{Binding Label_str_Past}"
                 FontSize="28"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Код доступа для прошлого часа." />
 
       <Button
                 x:Name="InvateBtn"

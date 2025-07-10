@@ -10,14 +10,29 @@ using System.Threading.Tasks;
 
 namespace IrzGuardPro.MVVM.ViewModel
 {
+    /// <summary>
+    /// ViewModel для страницы приглашения коллеги.
+    /// </summary>
     public class InvateViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Уровни доступа.
+        /// </summary>
         public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
 
+        /// <summary>
+        /// Рессурсы для генерации пароля.
+        /// </summary>
         PasswordResources resources = new PasswordResources();
 
+        /// <summary>
+        /// Event по изменению свойства.
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Время создания кода доступа.
+        /// </summary>
         public DateTime DateTime_Create
         {
             get => this.resources.DateTimeCreated;
@@ -30,6 +45,10 @@ namespace IrzGuardPro.MVVM.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Код доступа.
+        /// </summary>
         public int Password
         {
             get => this.resources.Password;
@@ -45,6 +64,9 @@ namespace IrzGuardPro.MVVM.ViewModel
 
         private string invate_str = "00:00:00 - ---";
 
+        /// <summary>
+        /// Строка для вывода на экран.
+        /// </summary>
         public string Invate_str 
         {
             get => this.invate_str ;
@@ -52,7 +74,7 @@ namespace IrzGuardPro.MVVM.ViewModel
             {
                 if (!string.IsNullOrEmpty(value) && !invate_str.Equals(value))
                 {
-                    invate_str = $"{this.resources.DateTimeCreated.Hour}:" +
+                    this.invate_str = $"{this.resources.DateTimeCreated.Hour}:" +
                         $"{string.Format("{0:d2}", this.resources.DateTimeCreated.Minute)}:" +
                         $"{string.Format("{0:d2}", this.resources.DateTimeCreated.Second)} - " +
                         $"{string.Format("{0:d3}", this.resources.Password)}";
@@ -61,7 +83,10 @@ namespace IrzGuardPro.MVVM.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Изменение свойства.
+        /// </summary>
+        /// <param name="prop"></param>
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

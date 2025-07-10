@@ -17,7 +17,7 @@
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+                SemanticProperties.Description="ИРЗ эмблема" />
         <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
               SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
         </Picker>
@@ -27,11 +27,16 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Код для приглашения." />
+        <Label 
+                Text="Код обновляется каждую 10 минуту"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="20"/>
         <Button
                 x:Name="BackMainBtn"
-                Text="Назад" 
-                SemanticProperties.Hint="go to Invate page "
+                Text="Назад"
+                SemanticProperties.Hint="Назад на главную страницу."
                 Clicked="ToBackMainPage"
                 HorizontalOptions="Fill" />
       </VerticalStackLayout>

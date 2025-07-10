@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace IrzGuardPro.MVVM.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SecurityModel
     {
-        public string Code { get; set; } = "0000";
+        public string Code { get; set; } = "";
     }
 }
