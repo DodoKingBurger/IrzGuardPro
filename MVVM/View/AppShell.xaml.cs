@@ -1,4 +1,5 @@
 ﻿using IrzGuardPro.Utility;
+using IrzGuardPro.MVVM.View;
 
 namespace IrzGuardPro
 {

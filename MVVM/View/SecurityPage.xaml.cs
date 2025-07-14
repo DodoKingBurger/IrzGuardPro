@@ -1,17 +1,17 @@
 using IrzGuardPro.MVVM.View;
 using IrzGuardPro.MVVM.ViewModel;
 using IrzGuardPro.Utility;
+using IrzGuardPro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.AccessControl;
 using System.Text;
-using IrzGuardPro;
 using System.Threading.Tasks;
 using System;
 
-namespace IrzGuardPro.MVVM.View;
+namespace IrzGuardPro;
 
 public partial class SecurityPage : ContentPage
 {

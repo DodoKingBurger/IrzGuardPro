@@ -31,7 +31,7 @@ namespace IrzGuardPro.Utility
                 using var stream = File.OpenRead(Path.Combine(mainDir, key));
                 using var reader = new StreamReader(stream);
                 var contents = reader.ReadToEnd();
-
+                reader.Close();
                 if (!string.IsNullOrEmpty(contents))
                     return contents.Trim();
                 else
@@ -60,7 +60,8 @@ namespace IrzGuardPro.Utility
                 if (!string.IsNullOrEmpty(value) && stream.CanWrite)
                 {
                     using var writer = new StreamWriter(stream);
-                    writer.WriteLine($"{value}");
+                    writer.WriteLine($"{value}");                    
+                    writer.Close();
                 }
                 else
                     throw new ArgumentException($"{value} - int is null.");
@@ -85,10 +86,16 @@ namespace IrzGuardPro.Utility
 
                 using var stream = File.OpenRead(Path.Combine(mainDir, key));
                 using var reader = new StreamReader(stream);
-                if (int.TryParse(reader.ReadToEnd(), out var contents))
+                if (int.TryParse(reader.ReadToEnd(), out var contents)) 
+                {
+                    reader.Close();
                     return contents;
-                else
+                }
+                else 
+                {
+                    reader.Close();
                     return -1;
+                }
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
@@ -113,6 +120,7 @@ namespace IrzGuardPro.Utility
                 {
                     using var writer = new StreamWriter(stream);
                     writer.WriteLine($"{value}");
+                    writer.Close();
                 }
                 else
                     throw new ArgumentException($"{value} - int is null.");

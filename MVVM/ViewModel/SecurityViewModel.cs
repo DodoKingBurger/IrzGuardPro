@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IrzGuardPro.MVVM.ViewModel
+namespace IrzGuardPro
 {
     /// <summary>
     /// ViewModel для страницы проверки безопасности.
