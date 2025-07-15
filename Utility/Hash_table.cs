@@ -135,8 +135,14 @@ namespace IrzGuardPro.Utility
         /// <param name="key"></param>
         public static void CreateFile(string key) 
         {
-            if(!File.Exists(Path.Combine(mainDir, key)))
-                File.Create(Path.Combine(mainDir, key));
+            
+            if(!File.Exists(Path.Combine(mainDir, key))) 
+            {
+                FileStream stream;
+                stream = File.Create(Path.Combine(mainDir, key));
+                stream.Close();
+            }
+
         }
 
         /// <summary>

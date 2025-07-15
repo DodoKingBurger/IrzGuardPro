@@ -135,8 +135,10 @@ public partial class SecurityPage : ContentPage
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
         //timer_hour.Interval = TimeSpan.FromHours(1);
 
-        timer_Load_Main.Tick += (s, e) => LoadPage();
-        timer_Load_Main.Start();
+        Task.Delay(1000);
+        LoadPage();
+        //        timer_Load_Main.Tick += (s, e) => LoadPage();
+        //        timer_Load_Main.Start();
     }
 
     #endregion
