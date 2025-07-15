@@ -118,11 +118,13 @@ public partial class SecurityPage : ContentPage
         if (ExistsVerificationFile())
         {
             App.Current.MainPage = new AppShell();
+            #if WINDOWS
             timer_Load_Main.Stop();
+            #endif
         }
     }
 
-    #endregion
+#endregion
 
     #region Конструкторы 
 
@@ -134,14 +136,17 @@ public partial class SecurityPage : ContentPage
 
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
         //timer_hour.Interval = TimeSpan.FromHours(1);
-
+#if WINDOWS
+            timer_Load_Main.Tick += (s, e) => LoadPage();
+               timer_Load_Main.Start();
+#else
         Task.Delay(1000);
         LoadPage();
-        //        timer_Load_Main.Tick += (s, e) => LoadPage();
-        //        timer_Load_Main.Start();
+#endif
+        
     }
 
-    #endregion
+#endregion
 
     #region NOT USED
     //        Title = "Accsess";
