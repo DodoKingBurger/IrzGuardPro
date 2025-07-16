@@ -24,11 +24,11 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// <summary>
         /// Данные для генерации на экран кодов доступа.
         /// </summary>
-        public List<PasswordResources> resources = new()
+        public List<CodeResources> resources = new()
         {
-            new PasswordResources(){ Password = 000, DateTimeCreated = DateTime.Now},
-            new PasswordResources(){ Password = 000, DateTimeCreated = DateTime.Now},
-            new PasswordResources(){ Password = 000, DateTimeCreated = DateTime.Now}
+            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now},
+            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now},
+            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now}
         };
         
         /// <summary>
@@ -57,12 +57,12 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public int Password_Past
         {
-            get => this.resources[0].Password;
+            get => this.resources[0].Code;
             set
             {
-                if (int.IsPositive(value) && !this.resources[0].Password.Equals(value))
+                if (int.IsPositive(value) && !this.resources[0].Code.Equals(value))
                 {
-                    this.resources[0].Password = value;
+                    this.resources[0].Code = value;
                     Label_str_Past = $"{value}";
                 }
             }
@@ -83,7 +83,7 @@ namespace IrzGuardPro.MVVM.ViewModel
                     this.label_str_Past = $"{this.resources[0].DateTimeCreated.Hour}:" +
                         "00:" +
                         "00 - " +
-                        $"{string.Format("{0:d3}", this.resources[0].Password)}";
+                        $"{string.Format("{0:d3}", this.resources[0].Code)}";
                     OnPropertyChanged();
                 }
             }
@@ -111,12 +111,12 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public int Password_Now
         {
-            get => this.resources[1].Password;
+            get => this.resources[1].Code;
             set
             {
-                if (int.IsPositive(value) && !this.resources[1].Password.Equals(value))
+                if (int.IsPositive(value) && !this.resources[1].Code.Equals(value))
                 {
-                    this.resources[1].Password = value;
+                    this.resources[1].Code = value;
                     Label_str_Now = $"{value}";
                 }
             }
@@ -137,7 +137,7 @@ namespace IrzGuardPro.MVVM.ViewModel
                     this.label_str_Now = $"{this.resources[1].DateTimeCreated.Hour}:" +
                         $"{string.Format("{0:d2}", this.resources[1].DateTimeCreated.Minute)}:" +
                         $"{string.Format("{0:d2}", this.resources[1].DateTimeCreated.Second)} - " +
-                        $"{string.Format("{0:d3}", this.resources[1].Password)}";
+                        $"{string.Format("{0:d3}", this.resources[1].Code)}";
                     OnPropertyChanged();
                 }
             }
@@ -164,12 +164,12 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public int Password_Future
         {
-            get => this.resources[2].Password;
+            get => this.resources[2].Code;
             set
             {
-                if (int.IsPositive(value) && !this.resources[2].Password.Equals(value))
+                if (int.IsPositive(value) && !this.resources[2].Code.Equals(value))
                 {
-                    this.resources[2].Password = value;
+                    this.resources[2].Code = value;
                     Label_str_Future = $"{value}";
                 }
             }
@@ -190,7 +190,7 @@ namespace IrzGuardPro.MVVM.ViewModel
                     this.label_str_Future = $"{this.resources[2].DateTimeCreated.Hour}:" +
                         "00:" +
                         "00 - " +
-                        $"{string.Format("{0:d3}", this.resources[2].Password)}";
+                        $"{string.Format("{0:d3}", this.resources[2].Code)}";
                     OnPropertyChanged();
                 }
             }

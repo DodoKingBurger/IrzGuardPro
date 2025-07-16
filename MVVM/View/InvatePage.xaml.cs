@@ -39,13 +39,18 @@ public partial class InvatePage : ContentPage
         if (sender is Picker) 
         {
             Hash_table.SetInt("ConfigFile.txt", ((Picker)sender).SelectedIndex);
-            DateTime dateTime = DateTime.Now;
+//            DateTime dateTime = DateTime.Now;
             //timer_password.Interval = TimeSpan.FromMinutes(10 - (dateTime.Minute % 10) - (dateTime.Second / 100));            
-            labelViewModel.Password = Guard.GenerateReferenceCode(((Picker)sender).SelectedIndex, dateTime);
+
+//            labelViewModel.Password = Guard.GenerateReferenceCode(((Picker)sender).SelectedIndex, dateTime);
         }
     }
 
-
+    /// <summary>
+    /// Возвращает на страницу назад.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void ToBackMainPage (object? sender, EventArgs e) 
     {
         await Navigation.PopAsync(true);
@@ -82,16 +87,16 @@ public partial class InvatePage : ContentPage
         int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
         ComboBox_AccessLevel.SelectedIndex = save_LevelAccess;
         DateTime dateTime = DateTime.Now;
-        labelViewModel.Password = Guard.GenerateReferenceCode(save_LevelAccess, dateTime);
+//        labelViewModel.Password = Guard.GenerateReferenceCode(save_LevelAccess, dateTime);
 
-        timer_password.Interval = TimeSpan.FromSeconds((10 - (dateTime.Minute % 10)) * 60  - dateTime.Second);
+//        timer_password.Interval = TimeSpan.FromSeconds((10 - (dateTime.Minute % 10)) * 60  - dateTime.Second);
         timer_time.Interval = TimeSpan.FromSeconds(1);
 
-        timer_password.Tick += (s, e) => ViewReferenceCode_code();
+//        timer_password.Tick += (s, e) => ViewReferenceCode_code();
         timer_time.Tick += (s, e) => ViewReferenceCode_time();
 
         timer_time.Start();
-        timer_password.Start();
+//        timer_password.Start();
     }
 
     #endregion

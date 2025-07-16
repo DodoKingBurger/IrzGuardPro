@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace IrzGuardPro.MVVM.Model
 {
     /// <summary>
-    /// Информация о коде для приглашения пользователя.
+    /// Информация для формирования кода доступа.
     /// </summary>
-    public class PasswordResources
+    public class CodeResources
     {
         /// <summary>
         /// Время сформирования кода.
@@ -17,8 +17,8 @@ namespace IrzGuardPro.MVVM.Model
         public DateTime DateTimeCreated { get; set; } = DateTime.Now;
 
         /// <summary>
-        /// Сформированный код для приглашения.
+        /// Сформированный трехзначный код для доступа к КСУ или приглашения коллеги.
         /// </summary>
-        public int Password { get; set; }
+        public int Code { get; set; }
     }
 }

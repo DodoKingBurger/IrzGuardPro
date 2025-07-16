@@ -13,16 +13,17 @@ using System;
 
 namespace IrzGuardPro;
 
+/// <summary>
+/// Страница для проверки доступа к приложению.
+/// </summary>
 public partial class SecurityPage : ContentPage
 {
     #region Поля и свойства
 
     /// <summary>
-    /// Таймер.
+    /// Таймер, для переключение страниц в случае прохождения успешной проверки.
     /// </summary>
     IDispatcherTimer timer_Load_Main = Application.Current.Dispatcher.CreateTimer();
-
-
 
     /// <summary>
     /// ViewModel.
@@ -46,7 +47,7 @@ public partial class SecurityPage : ContentPage
             {
                 if (!Hash_table.Exists("UniqueKey.config"))
                     Hash_table.CreateFile("UniqueKey.config");
-                Hash_table.SetString("UniqueKey.config", RSAcrypt.Encrypt(GetCodeDevice()));
+                Hash_table.SetString("UniqueKey.config", RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice()));
                 App.Current.MainPage = new AppShell();
             }
             else
@@ -60,13 +61,18 @@ public partial class SecurityPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void EntryBox_code_TextChanged(object sender, TextChangedEventArgs e)
     {
         EntryBox_code.TextColor = Colors.Black;
     }
 
     /// <summary>
-    /// Проверка верификационного файла.
+    /// Проверка верификации входного файла.
     /// </summary>
     /// <returns>True, если файл был найден и его содержимое совпадает с ключом.</returns>
     public bool ExistsVerificationFile()
@@ -75,7 +81,7 @@ public partial class SecurityPage : ContentPage
         {
             if (Hash_table.Exists("UniqueKey.config"))
             {
-                if (RSAcrypt.EqualsKey(Hash_table.GetString("UniqueKey.config"),RSAcrypt.Encrypt(GetCodeDevice())))
+                if (RSAcrypt.EqualsKey(Hash_table.GetString("UniqueKey.config"),RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice())))
                 {
                     return true;
                 }
@@ -90,25 +96,25 @@ public partial class SecurityPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Получения кода устройства взависимости от платформы.
-    /// </summary>
-    /// <returns>Код устройства.</returns>
-    static public string GetCodeDevice()
-    {
-        string deviceID = "0000 0000 0000 0000";
-#if ANDROID
-        deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-#elif IOS
-        deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
-#elif WINDOWS
-        deviceID = NetworkInterface.GetAllNetworkInterfaces()
-                                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                                .Select(nic => nic.GetPhysicalAddress().ToString())
-                                .FirstOrDefault();
-#endif
-        return deviceID;
-    }
+//    /// <summary>
+//    /// Получения кода устройства взависимости от платформы. 
+//    /// </summary>
+//    /// <returns>Код устройства.</returns>
+//    static public string GetCodeDevice()
+//    {
+//        string deviceID = "0000 0000 0000 0000";
+//#if ANDROID
+//        deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+//#elif IOS
+//        deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
+//#elif WINDOWS
+//        deviceID = NetworkInterface.GetAllNetworkInterfaces()
+//                                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+//                                .Select(nic => nic.GetPhysicalAddress().ToString())
+//                                .FirstOrDefault();
+//#endif
+//        return deviceID;
+//    }
 
     /// <summary>
     /// Загрузка страницы.
@@ -118,10 +124,12 @@ public partial class SecurityPage : ContentPage
         if (ExistsVerificationFile())
         {
             App.Current.MainPage = new AppShell();
-            #if WINDOWS
+
+        }           
+
+        #if WINDOWS
             timer_Load_Main.Stop();
-            #endif
-        }
+        #endif
     }
 
 #endregion
@@ -131,11 +139,13 @@ public partial class SecurityPage : ContentPage
     public SecurityPage()
 	{                   
         InitializeComponent();
-        security.Password = RSAcrypt.Encrypt(GetCodeDevice());
+        security.Password = RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice());
         LabelCode.Text = security.Password;
 
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
-        //timer_hour.Interval = TimeSpan.FromHours(1);
+
+
+        // Почему то на Windows не работает смена главной страницы сразу, а ток через время.
 #if WINDOWS
             timer_Load_Main.Tick += (s, e) => LoadPage();
                timer_Load_Main.Start();

@@ -23,7 +23,7 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// <summary>
         /// Рессурсы для генерации пароля.
         /// </summary>
-        PasswordResources resources = new PasswordResources();
+        CodeResources resources = new CodeResources();
 
         /// <summary>
         /// Event по изменению свойства.
@@ -41,6 +41,8 @@ namespace IrzGuardPro.MVVM.ViewModel
                 if (!value.Equals(null) && !this.resources.DateTimeCreated.Equals(value))
                 {
                     this.resources.DateTimeCreated = value;
+                    int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
+                    this.Password = Guard.GenerateReferenceCode(save_LevelAccess, this.resources.DateTimeCreated);
                     Invate_str = $"{value.ToString()}";
                 }
             }
@@ -51,12 +53,12 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public int Password
         {
-            get => this.resources.Password;
+            get => this.resources.Code;
             set
             {
-                if (int.IsPositive(value) && !this.resources.Password.Equals(value))
+                if (int.IsPositive(value) && !this.resources.Code.Equals(value))
                 {
-                    this.resources.Password = value;
+                    this.resources.Code = value;
                     Invate_str = $"{value}";
                 }
             }
@@ -77,7 +79,7 @@ namespace IrzGuardPro.MVVM.ViewModel
                     this.invate_str = $"{this.resources.DateTimeCreated.Hour}:" +
                         $"{string.Format("{0:d2}", this.resources.DateTimeCreated.Minute)}:" +
                         $"{string.Format("{0:d2}", this.resources.DateTimeCreated.Second)} - " +
-                        $"{string.Format("{0:d3}", this.resources.Password)}";
+                        $"{string.Format("{0:d3}", this.resources.Code)}";
                     OnPropertyChanged();
                 }
             }
