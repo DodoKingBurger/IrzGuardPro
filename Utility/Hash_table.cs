@@ -26,16 +26,15 @@ namespace IrzGuardPro.Utility
         {
             if (!string.IsNullOrEmpty(key))
             {
-                if (!File.Exists(Path.Combine(mainDir, key)))
-                    return "---";
-                using var stream = File.OpenRead(Path.Combine(mainDir, key));
-                using var reader = new StreamReader(stream);
-                var contents = reader.ReadToEnd();
-                reader.Close();
-                if (!string.IsNullOrEmpty(contents))
-                    return contents.Trim();
-                else
-                    return "---";
+                string contents = string.Empty;
+                using (FileStream fs  = new FileStream(Path.Combine(mainDir, key), FileMode.OpenOrCreate)) 
+                {
+                    StreamReader reader = new StreamReader(fs);
+                    contents = reader.ReadToEnd().Trim();
+                    if (string.IsNullOrEmpty(contents))
+                        contents = "---";
+                }
+                return contents;
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
@@ -52,23 +51,14 @@ namespace IrzGuardPro.Utility
         {
             if (!string.IsNullOrEmpty(key))
             {
-                FileStream stream;
-                if (!File.Exists(Path.Combine(mainDir, key)))
-                    stream = File.Create(Path.Combine(mainDir, key));
-                else
-                    stream = File.OpenWrite(Path.Combine(mainDir, key));
-                if (!string.IsNullOrEmpty(value) && stream.CanWrite)
+                using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.Create)) 
                 {
-                    using var writer = new StreamWriter(stream);
-                    writer.WriteLine($"{value}");                    
-                    writer.Close();
+                    StreamWriter writer = new StreamWriter(fs);
+                    writer.WriteLine(value);
                 }
-                else
-                    throw new ArgumentException($"{value} - int is null.");
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
-
         }
 
         /// <summary>
@@ -81,21 +71,13 @@ namespace IrzGuardPro.Utility
         {
             if (!string.IsNullOrEmpty(key))
             {
-                if (!File.Exists(Path.Combine(mainDir, key)))
-                    return -1;
-
-                using var stream = File.OpenRead(Path.Combine(mainDir, key));
-                using var reader = new StreamReader(stream);
-                if (int.TryParse(reader.ReadToEnd(), out var contents)) 
+                int value = -1;
+                using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.OpenOrCreate))
                 {
-                    reader.Close();
-                    return contents;
+                    StreamReader reader = new StreamReader(fs);
+                    int.TryParse(reader.ReadToEnd().Trim(), out value);
                 }
-                else 
-                {
-                    reader.Close();
-                    return -1;
-                }
+                return value;
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
@@ -111,19 +93,11 @@ namespace IrzGuardPro.Utility
         {
             if (!string.IsNullOrEmpty(key))
             {
-                FileStream stream;
-                if (!File.Exists(Path.Combine(mainDir, key)))
-                    stream = File.Create(Path.Combine(mainDir, key));
-                else
-                    stream = File.OpenWrite(Path.Combine(mainDir, key));
-                if (!value.Equals(null) && stream.CanWrite)
+                using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.Create))
                 {
-                    using var writer = new StreamWriter(stream);
-                    writer.WriteLine($"{value}");
-                    writer.Close();
+                    StreamWriter writer = new StreamWriter(fs);
+                    writer.WriteLine(value);
                 }
-                else
-                    throw new ArgumentException($"{value} - int is null.");
             }
             else
                 throw new ArgumentException($"{key} - string is null or empty.");
@@ -135,14 +109,11 @@ namespace IrzGuardPro.Utility
         /// <param name="key"></param>
         public static void CreateFile(string key) 
         {
-            
             if(!File.Exists(Path.Combine(mainDir, key))) 
             {
-                FileStream stream;
-                stream = File.Create(Path.Combine(mainDir, key));
+                FileStream stream = File.Create(Path.Combine(mainDir, key));
                 stream.Close();
             }
-
         }
 
         /// <summary>
