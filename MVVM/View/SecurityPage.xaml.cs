@@ -43,11 +43,11 @@ public partial class SecurityPage : ContentPage
     {
         try
         {
-            if (RSAcrypt.EqualsKey(EntryBox_code.Text))
+            if (Guard.EqualsKey(EntryBox_code.Text))
             {
                 if (!Hash_table.Exists("UniqueKey.config"))
                     Hash_table.CreateFile("UniqueKey.config");
-                Hash_table.SetString("UniqueKey.config", RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice()));
+                Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
                 App.Current.MainPage = new AppShell();
             }
             else
@@ -68,7 +68,8 @@ public partial class SecurityPage : ContentPage
     /// <param name="e"></param>
     private void EntryBox_code_TextChanged(object sender, TextChangedEventArgs e)
     {
-        EntryBox_code.TextColor = Colors.Black;
+        if(sender is Entry entry)
+            entry.TextColor = Colors.Black;
     }
 
     /// <summary>
@@ -81,7 +82,7 @@ public partial class SecurityPage : ContentPage
         {
             if (Hash_table.Exists("UniqueKey.config"))
             {
-                if (RSAcrypt.EqualsKey(Hash_table.GetString("UniqueKey.config"),RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice())))
+                if (Guard.EqualsKey(Hash_table.GetString("UniqueKey.config"),Guard.Encrypt(DeviceSystem.GetCodeDevice())))
                 {
                     return true;
                 }
@@ -95,26 +96,6 @@ public partial class SecurityPage : ContentPage
             return false;
         }
     }
-
-//    /// <summary>
-//    /// Получения кода устройства взависимости от платформы. 
-//    /// </summary>
-//    /// <returns>Код устройства.</returns>
-//    static public string GetCodeDevice()
-//    {
-//        string deviceID = "0000 0000 0000 0000";
-//#if ANDROID
-//        deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-//#elif IOS
-//        deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
-//#elif WINDOWS
-//        deviceID = NetworkInterface.GetAllNetworkInterfaces()
-//                                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-//                                .Select(nic => nic.GetPhysicalAddress().ToString())
-//                                .FirstOrDefault();
-//#endif
-//        return deviceID;
-//    }
 
     /// <summary>
     /// Загрузка страницы.
@@ -139,7 +120,7 @@ public partial class SecurityPage : ContentPage
     public SecurityPage()
 	{                   
         InitializeComponent();
-        security.Password = RSAcrypt.Encrypt(DeviceSystem.GetCodeDevice());
+        security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
         LabelCode.Text = security.Password;
 
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
