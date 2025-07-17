@@ -25,7 +25,7 @@
                 FontSize="35" />
         <Label
                 x:Name="LabelCode"
-                Text = "{Binding Label_code}"
+                Text = "{Binding Password}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"

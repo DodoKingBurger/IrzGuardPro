@@ -15,8 +15,6 @@ namespace IrzGuardPro
         /// </summary>
         IDispatcherTimer timer_minute = Application.Current.Dispatcher.CreateTimer();
 
-        //IDispatcherTimer timer_hour = Application.Current.Dispatcher.CreateTimer();
-
         /// <summary>
         /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
         /// </summary>
@@ -32,70 +30,22 @@ namespace IrzGuardPro
         /// </summary>
         private void ViewCodePass() 
         {
-            //MainThread.BeginInvokeOnMainThread(() =>
-            //{
             try
             {
                 int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
                 DateTime dateTime = DateTime.Now;
 
-                DateTime dateTime_Past = dateTime.AddHours(-1);
-                DateTime dateTime_Future = dateTime.AddHours(1);
-
-                labelViewModel.DateTime_Create_Now = dateTime;
-                labelViewModel.DateTime_Create_Past = dateTime_Past;
-                labelViewModel.DateTime_Create_Future = dateTime_Future;
-
-                labelViewModel.Password_Future = Guard.GeneratePass(save_LevelAccess, dateTime_Future);
-                labelViewModel.Password_Now = Guard.GeneratePass(save_LevelAccess, dateTime);
-                labelViewModel.Password_Past = Guard.GeneratePass(save_LevelAccess, dateTime_Past);
-
-                //labelViewModel.Name_Future = $"{dateTime_Future.Hour}:00 - " +
-                //        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Future))}";
-                //labelViewModel.Name_Past = $"{dateTime_Past.Hour}:00 - " +
-                //        $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime_Past))}";
-                //labelViewModel.Name_Now = $"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}", dateTime.Second)} - " +
-                //    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))}";
+                labelViewModel.Now_date.DateTime_Create = dateTime;
+                labelViewModel.Past_data.DateTime_Create = dateTime.AddHours(-1);
+                labelViewModel.Future_data.DateTime_Create = dateTime.AddHours(1);
             }
             catch (Exception ex) 
             {
-                DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes","No");
+                if(!DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes", "No").Result)
+                    timer_minute.Stop();
             }
-
-            #region NOT USED
-            /*if(this.dateTime_Future != dateTime.AddHours(1)) 
-            {
-                this.dateTime_Future = dateTime.AddHours(1);
-                //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-                LabelCodePassPast.LoadFromXaml($"<Label Text =\"{this.dateTime_Past.Hour}:00 - " +
-                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Past))} \"/>");
-            }
-
-            if (this.dateTime_Past != dateTime.AddHours(-1)) 
-            {
-                this.dateTime_Past = dateTime.AddHours(-1);
-                //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-                LabelCodePassFuture.LoadFromXaml($"<Label Text =\"{this.dateTime_Future.Hour}:00 - " +
-                    $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Future))} \" />");
-            }
-
-            //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
-            LabelCodePass.LoadFromXaml($"<Label Text =\"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}",dateTime.Second)} - " +
-                $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))} \" />");*/
-
-            //});
-            #endregion
         }
 
-        /// <summary>
-        /// Переход к информации об устройстве.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private async void ToInfoDevicePage(object? sender, EventArgs e)
-        //{
-        //    await Navigation.PushAsync(new SecurityPage());
-        //}
 
         /// <summary>
         /// Переход к страничке с реферальным кодом.
@@ -146,6 +96,42 @@ namespace IrzGuardPro
         }
 
         #endregion
+
+        #region NOT USED
+
+        /// <summary>
+        /// Переход к информации об устройстве.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //private async void ToInfoDevicePage(object? sender, EventArgs e)
+        //{
+        //    await Navigation.PushAsync(new SecurityPage());
+        //}
+
+        /*if(this.dateTime_Future != dateTime.AddHours(1)) 
+        {
+            this.dateTime_Future = dateTime.AddHours(1);
+            //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
+            LabelCodePassPast.LoadFromXaml($"<Label Text =\"{this.dateTime_Past.Hour}:00 - " +
+                $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Past))} \"/>");
+        }
+
+        if (this.dateTime_Past != dateTime.AddHours(-1)) 
+        {
+            this.dateTime_Past = dateTime.AddHours(-1);
+            //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
+            LabelCodePassFuture.LoadFromXaml($"<Label Text =\"{this.dateTime_Future.Hour}:00 - " +
+                $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, this.dateTime_Future))} \" />");
+        }
+
+        //Почему то XAML не хочет видеть VM через binding пришлось вручную работать через загрузку XAML кода.
+        LabelCodePass.LoadFromXaml($"<Label Text =\"{dateTime.Hour}:{string.Format("{0:d2}", dateTime.Minute)}:{string.Format("{0:d2}",dateTime.Second)} - " +
+            $"{string.Format("{0:d3}", Guard.GeneratePass(save_LevelAccess, dateTime))} \" />");*/
+
+        //});
+        #endregion
+
     }
 
 }

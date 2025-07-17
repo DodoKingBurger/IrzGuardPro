@@ -20,11 +20,6 @@ public partial class InvatePage : ContentPage
     /// </summary>
     IDispatcherTimer timer_time = Application.Current.Dispatcher.CreateTimer();
 
-    /// <summary>
-    /// Таймер для обновления пароля.
-    /// </summary>
-    IDispatcherTimer timer_password = Application.Current.Dispatcher.CreateTimer();
-
     #endregion
 
     #region Методы
@@ -36,14 +31,8 @@ public partial class InvatePage : ContentPage
     /// <param name="e"></param>
     private void ComboBox_AccessLevel_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        if (sender is Picker) 
-        {
+        if (sender is Picker)
             Hash_table.SetInt("ConfigFile.txt", ((Picker)sender).SelectedIndex);
-//            DateTime dateTime = DateTime.Now;
-            //timer_password.Interval = TimeSpan.FromMinutes(10 - (dateTime.Minute % 10) - (dateTime.Second / 100));            
-
-//            labelViewModel.Password = Guard.GenerateReferenceCode(((Picker)sender).SelectedIndex, dateTime);
-        }
     }
 
     /// <summary>
@@ -51,7 +40,7 @@ public partial class InvatePage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void ToBackMainPage (object? sender, EventArgs e) 
+    private async void ToBackMainPage(object? sender, EventArgs e)
     {
         await Navigation.PopAsync(true);
     }
@@ -62,41 +51,19 @@ public partial class InvatePage : ContentPage
     /// </summary>
     private void ViewReferenceCode_time()
     {
-        DateTime dateTime = DateTime.Now;
-        //MainThread.BeginInvokeOnMainThread(() =>
-        //{            
-            labelViewModel.DateTime_Create = dateTime;
-        //});
+        labelViewModel.DateTime_Create = DateTime.Now;
     }
 
-    private void ViewReferenceCode_code()
-    {
-        int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
-        DateTime dateTime = DateTime.Now;
-        //MainThread.BeginInvokeOnMainThread(() =>
-        //{
-            labelViewModel.Password = Guard.GenerateReferenceCode(save_LevelAccess, dateTime);
-        //});
-        timer_password.Interval = TimeSpan.FromMinutes(10);
-    }
-
-    public void LoadPage() 
+    public void LoadPage()
     {
         BindingContext = labelViewModel;
         ComboBox_AccessLevel.ItemsSource = labelViewModel.ListLevelAccess;
         int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
         ComboBox_AccessLevel.SelectedIndex = save_LevelAccess;
         DateTime dateTime = DateTime.Now;
-//        labelViewModel.Password = Guard.GenerateReferenceCode(save_LevelAccess, dateTime);
-
-//        timer_password.Interval = TimeSpan.FromSeconds((10 - (dateTime.Minute % 10)) * 60  - dateTime.Second);
         timer_time.Interval = TimeSpan.FromSeconds(1);
-
-//        timer_password.Tick += (s, e) => ViewReferenceCode_code();
         timer_time.Tick += (s, e) => ViewReferenceCode_time();
-
         timer_time.Start();
-//        timer_password.Start();
     }
 
     #endregion
@@ -104,10 +71,19 @@ public partial class InvatePage : ContentPage
     #region Конструкторы
 
     public InvatePage()
-	{
+    {
         InitializeComponent();
         LoadPage();
     }
+
+    #endregion
+
+    #region NOTUSED
+
+    ///// <summary>
+    ///// Таймер для обновления пароля.
+    ///// </summary>
+    //IDispatcherTimer timer_password = Application.Current.Dispatcher.CreateTimer();
 
     //public InvatePage()
     //{
@@ -120,5 +96,16 @@ public partial class InvatePage : ContentPage
     //    Content = new StackLayout { Children = { label, backButton } };
     //}
 
+
+    //private void ViewReferenceCode_code()
+    //{
+    //    int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
+    //    DateTime dateTime = DateTime.Now;
+    //    //MainThread.BeginInvokeOnMainThread(() =>
+    //    //{
+    //        labelViewModel.Password = Guard.GenerateReferenceCode(save_LevelAccess, dateTime);
+    //    //});
+    //    timer_password.Interval = TimeSpan.FromMinutes(10);
+    //}
     #endregion
 }

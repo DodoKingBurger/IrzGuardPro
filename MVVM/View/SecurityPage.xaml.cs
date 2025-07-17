@@ -93,6 +93,7 @@ public partial class SecurityPage : ContentPage
         }
         catch (Exception ex)
         {
+            DisplayAlert("Ошибка", ex.Message, "OK");
             return false;
         }
     }
@@ -100,12 +101,17 @@ public partial class SecurityPage : ContentPage
     /// <summary>
     /// Загрузка страницы.
     /// </summary>
-    private void LoadPage()
+    private async void LoadPage()
     {
+        security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
+
+        // Не хотел напрямую, но иначе не работает. Не знаю почему :-(
+        LabelCode.Text = security.Password;
+        //
         if (ExistsVerificationFile())
         {
             App.Current.MainPage = new AppShell();
-
+            //await Navigation.PushAsync(new MainPage());
         }           
 
         #if WINDOWS
@@ -118,10 +124,10 @@ public partial class SecurityPage : ContentPage
     #region Конструкторы 
 
     public SecurityPage()
-	{                   
+	{
+        BindingContext = security;
+
         InitializeComponent();
-        security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
-        LabelCode.Text = security.Password;
 
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
 

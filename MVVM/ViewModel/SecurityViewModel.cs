@@ -24,20 +24,17 @@ namespace IrzGuardPro
         /// </summary>
         public SecurityModel model = new SecurityModel();
 
-
-        private string password;
         /// <summary>
         /// Код доступа.
         /// </summary>
         public string Password
         {
-            get => this.password;
+            get => this.model.Code;
             set
             {
                 if (!string.IsNullOrEmpty(value) && !this.model.Code.Equals(value))
                 {
                     this.model.Code = string.Format("{0:d4}",value);
-                    this.password = this.model.Code;
                     OnPropertyChanged();
                 }
             }

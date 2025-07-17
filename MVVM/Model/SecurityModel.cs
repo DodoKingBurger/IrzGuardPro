@@ -14,6 +14,6 @@ namespace IrzGuardPro.MVVM.Model
         /// <summary>
         /// Четырехзначный код доступа к программе IrzGuardPro
         /// </summary>
-        public string Code { get; set; } = "";
+        public string Code { get; set; } = string.Empty;
     }
 }

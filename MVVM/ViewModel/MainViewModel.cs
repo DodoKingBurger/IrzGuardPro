@@ -1,202 +1,48 @@
 ﻿using IrzGuardPro.MVVM.Model;
+using IrzGuardPro.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace IrzGuardPro.MVVM.ViewModel
 {
     /// <summary>
     /// ViewModel Главного экрана.
     /// </summary>
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel 
     {
-        #region Поля и свойства
 
         /// <summary>
         /// Уровни доступа.
         /// </summary>
         public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
 
-        /// <summary>
-        /// Данные для генерации на экран кодов доступа.
-        /// </summary>
-        public List<CodeResources> resources = new()
-        {
-            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now},
-            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now},
-            new CodeResources(){ Code = 000, DateTimeCreated = DateTime.Now}
-        };
-        
-        /// <summary>
-        /// Событие об изменения свойства.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public MainViewModel_Now Now_date {  get; set; }
 
-        /// <summary>
-        /// Время создания кода доступа на -1 час.
-        /// </summary>
-        public DateTime DateTime_Create_Past
+        public MainViewModel_Modified Future_data { get; set; }
+
+        public MainViewModel_Modified Past_data { get; set; }
+
+        public MainViewModel() 
         {
-            get => this.resources[0].DateTimeCreated;
-            set
-            {
-                if (!value.Equals(null) && !this.resources[0].DateTimeCreated.Hour.Equals(value))
-                {
-                    this.resources[0].DateTimeCreated = value;
-                    Label_str_Past = $"{value.ToString()}";
-                }
-            }
+            this.Now_date = new MainViewModel_Now();
+            this.Future_data = new MainViewModel_Modified();
+            this.Past_data = new MainViewModel_Modified();
         }
 
-        /// <summary>
-        /// Код доступа на -1 час.
-        /// </summary>
-        public int Password_Past
+        public MainViewModel(List<string> list) 
         {
-            get => this.resources[0].Code;
-            set
-            {
-                if (int.IsPositive(value) && !this.resources[0].Code.Equals(value))
-                {
-                    this.resources[0].Code = value;
-                    Label_str_Past = $"{value}";
-                }
-            }
+            this.ListLevelAccess = list;
+            this.Now_date = new MainViewModel_Now();
+            this.Future_data = new MainViewModel_Modified();
+            this.Past_data = new MainViewModel_Modified();
         }
-
-        private string label_str_Past = "00:00:00 - ---";
-
-        /// <summary>
-        /// Строка для вывода на -1 час на экран.
-        /// </summary>
-        public string Label_str_Past
-        {
-            get => this.label_str_Past;
-            set
-            {
-                if (!string.IsNullOrEmpty(value) && !label_str_Past.Equals(value))
-                {
-                    this.label_str_Past = $"{this.resources[0].DateTimeCreated.Hour}:" +
-                        "00:" +
-                        "00 - " +
-                        $"{string.Format("{0:d3}", this.resources[0].Code)}";
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Время создания текущего кода доступа.
-        /// </summary>
-        public DateTime DateTime_Create_Now
-        {
-            get => this.resources[1].DateTimeCreated;
-            set
-            {
-                if (!value.Equals(null) && !this.resources[1].DateTimeCreated.Equals(value))
-                {
-                    this.resources[1].DateTimeCreated = value;
-                    Label_str_Now = $"{value.ToString()}";
-                }
-            }
-        }
-
-        /// <summary>
-        /// Текущий код доступа.
-        /// </summary>
-        public int Password_Now
-        {
-            get => this.resources[1].Code;
-            set
-            {
-                if (int.IsPositive(value) && !this.resources[1].Code.Equals(value))
-                {
-                    this.resources[1].Code = value;
-                    Label_str_Now = $"{value}";
-                }
-            }
-        }
-
-        private string label_str_Now = "00:00:00 - ---";
-
-        /// <summary>
-        /// Строка для вывода на экран с текущим временем и кодом доступа.
-        /// </summary>
-        public string Label_str_Now
-        {
-            get => this.label_str_Now;
-            set
-            {
-                if (!string.IsNullOrEmpty(value) && !label_str_Now.Equals(value))
-                {
-                    this.label_str_Now = $"{this.resources[1].DateTimeCreated.Hour}:" +
-                        $"{string.Format("{0:d2}", this.resources[1].DateTimeCreated.Minute)}:" +
-                        $"{string.Format("{0:d2}", this.resources[1].DateTimeCreated.Second)} - " +
-                        $"{string.Format("{0:d3}", this.resources[1].Code)}";
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Время создания кода доступа на +1 час.
-        /// </summary>
-        public DateTime DateTime_Create_Future
-        {
-            get => this.resources[2].DateTimeCreated;
-            set
-            {
-                if (!value.Equals(null) && !this.resources[2].DateTimeCreated.Hour.Equals(value))
-                {
-                    this.resources[2].DateTimeCreated = value;
-                    Label_str_Future = $"{value.ToString()}";
-                }
-            }
-        }
-
-        /// <summary>
-        /// Код доступа на +1 час .
-        /// </summary>
-        public int Password_Future
-        {
-            get => this.resources[2].Code;
-            set
-            {
-                if (int.IsPositive(value) && !this.resources[2].Code.Equals(value))
-                {
-                    this.resources[2].Code = value;
-                    Label_str_Future = $"{value}";
-                }
-            }
-        }
-
-        private string label_str_Future = "00:00:00 - ---";
-
-        /// <summary>
-        /// Строка с кодом доступа на +1 час для вывода на экран.
-        /// </summary>
-        public string Label_str_Future
-        {
-            get => this.label_str_Future;
-            set
-            {
-                if (!string.IsNullOrEmpty(value) && !label_str_Future.Equals(value))
-                {
-                    this.label_str_Future = $"{this.resources[2].DateTimeCreated.Hour}:" +
-                        "00:" +
-                        "00 - " +
-                        $"{string.Format("{0:d3}", this.resources[2].Code)}";
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        #endregion
 
         #region NOT USED
 
@@ -243,19 +89,6 @@ namespace IrzGuardPro.MVVM.ViewModel
         //        }
         //    }
         //}
-
-        #endregion
-
-        #region Методы
-
-        /// <summary>
-        /// Функция под изменения свойства.
-        /// </summary>
-        /// <param name="prop"></param>
-        public void OnPropertyChanged([CallerMemberName] string prop = "") 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
 
         #endregion
     }
