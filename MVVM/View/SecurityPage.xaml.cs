@@ -68,7 +68,7 @@ public partial class SecurityPage : ContentPage
     /// <param name="e"></param>
     private void EntryBox_code_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if(sender is Entry entry)
+        if (sender is Entry entry && entry.TextColor != Colors.Black)
             entry.TextColor = Colors.Black;
     }
 

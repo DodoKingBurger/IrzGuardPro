@@ -44,7 +44,7 @@ namespace IrzGuardPro.Utility
         }
 
         /// <summary>
-        /// 
+        /// Перезаписывает файл с названием key, и записывает туда данные из параметра value.
         /// </summary>
         /// <param name="key">Имя файла.</param>
         /// <param name="value">Значения передаваймая в файл.</param>
@@ -64,7 +64,7 @@ namespace IrzGuardPro.Utility
         }
 
         /// <summary>
-        /// 
+        /// Возвращает из файла key число, если конвертировать не получается вернет -1.
         /// </summary>
         /// <param name="key">Имя файла.</param>
         /// <returns>Число внутри файла.</returns>
@@ -88,12 +88,12 @@ namespace IrzGuardPro.Utility
         }
 
         /// <summary>
-        /// 
+        /// Перезаписывает файл с названием key, и записывает туда данные из параметра value.
         /// </summary>
         /// <param name="key">Имя файла.</param>
         /// <param name="value">Значения передаваймая в файл.</param>
         /// <exception cref="ArgumentException">value или key null</exception>
-        public static async Task SetInt(string key, int value)
+        public static async void SetInt(string key, int value)
         {
             if (!string.IsNullOrEmpty(key))
             {

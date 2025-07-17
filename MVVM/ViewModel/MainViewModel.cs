@@ -23,10 +23,19 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
 
-        public MainViewModel_Now Now_date {  get; set; }
+        /// <summary>
+        /// ViewModel с данными на данный момент.
+        /// </summary>
+        public MainViewModel_Now Now_date { get; set; }
 
+        /// <summary>
+        /// ViewModel с данными на момент +1 час от текущего времени.
+        /// </summary>
         public MainViewModel_Modified Future_data { get; set; }
 
+        /// <summary>
+        /// ViewModel с данными на момент -1 час от текущего времени.
+        /// </summary>
         public MainViewModel_Modified Past_data { get; set; }
 
         public MainViewModel() 
