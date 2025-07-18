@@ -35,39 +35,12 @@ public partial class SecurityPage : ContentPage
     #region Методы
 
     /// <summary>
-    /// Переход к страничке с реферальным кодом.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void CheckingCodePass(object? sender, EventArgs e)
-    {
-        try
-        {
-            if (Guard.EqualsKey(EntryBox_code.Text))
-            {
-                if (!Hash_table.Exists("UniqueKey.config"))
-                    Hash_table.CreateFile("UniqueKey.config");
-                Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
-                App.Current.MainPage = new AppShell();
-            }
-            else
-            {
-                EntryBox_code.TextColor = Colors.Red;
-            }
-        }
-        catch (Exception ex)
-        {
-            DisplayAlert("Ошибка",ex.Message,"OK");
-        }
-    }
-
-    /// <summary>
     /// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void EntryBox_code_TextChanged(object sender, TextChangedEventArgs e)
-    {
+   {
         if (sender is Entry entry && entry.TextColor != Colors.Black)
             entry.TextColor = Colors.Black;
     }
@@ -104,8 +77,7 @@ public partial class SecurityPage : ContentPage
     private async void LoadPage()
     {
         security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
-
-        // Не хотел напрямую, но иначе не работает. Не знаю почему :-(
+        // Не хотел через биндинг работать, иначе не работает. Не знаю почему :-(
         LabelCode.Text = security.Password;
         //
         if (ExistsVerificationFile())
@@ -113,25 +85,21 @@ public partial class SecurityPage : ContentPage
             App.Current.MainPage = new AppShell();
             //await Navigation.PushAsync(new MainPage());
         }           
-
         #if WINDOWS
             timer_Load_Main.Stop();
         #endif
     }
 
-#endregion
+    #endregion
 
     #region Конструкторы 
 
     public SecurityPage()
 	{
+        Loaded += (s, e) => LoadPage();
         BindingContext = security;
-
         InitializeComponent();
-
         timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
-
-
         // Почему то на Windows не работает смена главной страницы сразу, а ток через время.
 #if WINDOWS
             timer_Load_Main.Tick += (s, e) => LoadPage();
@@ -140,12 +108,38 @@ public partial class SecurityPage : ContentPage
         Task.Delay(1000);
         LoadPage();
 #endif
-        
     }
 
-#endregion
+    #endregion
 
     #region NOT USED
+
+    /// <summary>
+    /// Переход к страничке с реферальным кодом.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    //private void CheckingCodePass(object? sender, EventArgs e)
+    //{
+    //    try
+    //    {
+    //        if (Guard.EqualsKey(EntryBox_code.Text))
+    //        {
+    //            if (!Hash_table.Exists("UniqueKey.config"))
+    //                Hash_table.CreateFile("UniqueKey.config");
+    //            Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
+    //            App.Current.MainPage = new AppShell();
+    //        }
+    //        else
+    //        {
+    //            EntryBox_code.TextColor = Colors.Red;
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        DisplayAlert("Ошибка",ex.Message,"OK");
+    //    }
+    //}
     //        Title = "Accsess";
     //        Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
 

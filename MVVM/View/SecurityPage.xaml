@@ -32,6 +32,7 @@
                 SemanticProperties.Description="Код для проверки доступа." />
         <Entry 
                x:Name="EntryBox_code" Keyboard="Numeric"
+               Text="{Binding EnteredCode}"
                TextChanged="EntryBox_code_TextChanged"
                Placeholder="Введите код доступа" FontFamily="Helvetica" 
                FontSize="28" MaxLength="4"/>
@@ -39,8 +40,10 @@
                 x:Name="CheckCodePass"
                 Text="Проверить" 
                 SemanticProperties.Hint="go to Mainpage "
-                Clicked="CheckingCodePass"
-                HorizontalOptions="Fill" />
+
+                HorizontalOptions="Fill" 
+                Command="{Binding CheckAllowingCommand}"
+                CommandParameter="{Binding Source = {x:Reference EntryBox_code} }"/>
       </VerticalStackLayout>
     </ScrollView>
   </VerticalStackLayout>
