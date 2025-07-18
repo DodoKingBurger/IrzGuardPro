@@ -9,7 +9,6 @@
   </ContentPage.BindingContext>
   <VerticalStackLayout>
     <ScrollView>
-
       <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -40,7 +39,6 @@
                 x:Name="CheckCodePass"
                 Text="Проверить" 
                 SemanticProperties.Hint="go to Mainpage "
-
                 HorizontalOptions="Fill" 
                 Command="{Binding CheckAllowingCommand}"
                 CommandParameter="{Binding Source = {x:Reference EntryBox_code} }"/>

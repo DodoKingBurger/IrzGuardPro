@@ -53,16 +53,9 @@ public partial class SecurityPage : ContentPage
     {
         try
         {
-            if (Hash_table.Exists("UniqueKey.config"))
-            {
-                if (Guard.EqualsKey(Hash_table.GetString("UniqueKey.config"),Guard.Encrypt(DeviceSystem.GetCodeDevice())))
-                {
-                    return true;
-                }
-                return false;
-            }
-            else
-                return false;
+            if (Hash_table.Exists("UniqueKey.config") && Guard.EqualsKey(Hash_table.GetString("UniqueKey.config"), Guard.Encrypt(DeviceSystem.GetCodeDevice())))
+                return true;
+            return false;
         }
         catch (Exception ex)
         {
