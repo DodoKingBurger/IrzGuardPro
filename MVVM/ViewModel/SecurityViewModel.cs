@@ -26,7 +26,7 @@ namespace IrzGuardPro
         /// <summary>
         /// Модель.
         /// </summary>
-        public SecurityModel model = new SecurityModel();
+        public SecurityModel model = new();
 
         /// <summary>
         /// Комманда для проверки допуска.
@@ -74,7 +74,7 @@ namespace IrzGuardPro
         /// <param name="prop"></param>
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             ((Command)this.CheckAllowingCommand).ChangeCanExecute(); 
         }
 

@@ -18,7 +18,7 @@ namespace IrzGuardPro
         /// <summary>
         /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
         /// </summary>
-        public MainViewModel labelViewModel = new MainViewModel();
+        public MainViewModel labelViewModel = new();
 
         #endregion
 
@@ -64,8 +64,8 @@ namespace IrzGuardPro
         /// <param name="e"></param>
         private void ComboBox_AccessLevel_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            if (sender is Picker)
-                Hash_table.SetInt("ConfigFile.txt", ((Picker)sender).SelectedIndex);
+            if (sender is Picker picker)
+                Hash_table.SetInt("ConfigFile.txt", picker.SelectedIndex);
         }
 
         /// <summary>
@@ -99,11 +99,11 @@ namespace IrzGuardPro
 
         #region NOT USED
 
-        /// <summary>
-        /// Переход к информации об устройстве.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        ///// <summary>
+        ///// Переход к информации об устройстве.
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
         //private async void ToInfoDevicePage(object? sender, EventArgs e)
         //{
         //    await Navigation.PushAsync(new SecurityPage());

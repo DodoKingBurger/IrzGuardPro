@@ -28,7 +28,7 @@ public partial class SecurityPage : ContentPage
     /// <summary>
     /// ViewModel.
     /// </summary>
-    SecurityViewModel security = new SecurityViewModel();
+    SecurityViewModel security = new();
 
     #endregion
 
@@ -67,7 +67,7 @@ public partial class SecurityPage : ContentPage
     /// <summary>
     /// Загрузка страницы.
     /// </summary>
-    private async void LoadPage()
+    private void LoadPage()
     {
         security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
         // Не хотел через биндинг работать, иначе не работает. Не знаю почему :-(
@@ -107,31 +107,31 @@ public partial class SecurityPage : ContentPage
 
     #region NOT USED
 
-    /// <summary>
-    /// Переход к страничке с реферальным кодом.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    //private void CheckingCodePass(object? sender, EventArgs e)
-    //{
-    //    try
-    //    {
-    //        if (Guard.EqualsKey(EntryBox_code.Text))
-    //        {
-    //            if (!Hash_table.Exists("UniqueKey.config"))
-    //                Hash_table.CreateFile("UniqueKey.config");
-    //            Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
-    //            App.Current.MainPage = new AppShell();
-    //        }
-    //        else
-    //        {
-    //            EntryBox_code.TextColor = Colors.Red;
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        DisplayAlert("Ошибка",ex.Message,"OK");
-    //    }
+    ///// <summary>
+    ///// Переход к страничке с реферальным кодом.
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    ////private void CheckingCodePass(object? sender, EventArgs e)
+    ////{
+    ////    try
+    ////    {
+    ////        if (Guard.EqualsKey(EntryBox_code.Text))
+    ////        {
+    ////            if (!Hash_table.Exists("UniqueKey.config"))
+    ////                Hash_table.CreateFile("UniqueKey.config");
+    ////            Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
+    ////            App.Current.MainPage = new AppShell();
+    ////        }
+    ////        else
+    ////        {
+    ////            EntryBox_code.TextColor = Colors.Red;
+    ////        }
+    ////    }
+    ////    catch (Exception ex)
+    ////    {
+    ////        DisplayAlert("Ошибка",ex.Message,"OK");
+    ////    }
     //}
     //        Title = "Accsess";
     //        Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
