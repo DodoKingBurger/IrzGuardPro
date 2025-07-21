@@ -84,7 +84,7 @@ namespace IrzGuardPro
 
         public SecurityViewModel() 
         {
-            //Проверка допуска через файл.
+            //Проверка допуска через файл. Должна быть инициализирована первой
             this.CheckAllowingCommand = new Command((object? args) =>
             {
                 if (Guard.EqualsKey(this.enteredCode))
@@ -99,6 +99,7 @@ namespace IrzGuardPro
                     if (args is Entry entry) entry.TextColor = Colors.Red;
                 }
             });
+            this.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
         }
 
         #endregion

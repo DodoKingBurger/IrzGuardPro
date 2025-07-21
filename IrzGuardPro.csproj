@@ -50,35 +50,43 @@
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <Debugger>Xamarin</Debugger>
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <Debugger>Xamarin</Debugger>
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationId>IrzGuardPro.app</ApplicationId>
+	  <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -130,6 +138,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\View\SecurityPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\Styles - Копировать.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

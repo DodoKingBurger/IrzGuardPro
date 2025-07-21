@@ -6,9 +6,13 @@
   <ContentPage.BindingContext>
     <viewmodel:MainViewModel/>
   </ContentPage.BindingContext>
-  <ScrollView>
-    
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="10*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
     <VerticalStackLayout
+      Grid.Row="0"
             Padding="30,0"
             Spacing="25">
       <Image
@@ -47,16 +51,27 @@
                 Text="Пригласи коллегу" 
                 SemanticProperties.Hint="go to Invate page "
                 Clicked="ToInvateBtnPage"
-                HorizontalOptions="Fill" />
-
-      <!--<Button
+                HorizontalOptions="Center" />
+    </VerticalStackLayout>
+    <Label 
+                Text="{Binding Now_date.Version}"
+                x:Name="Label_info"
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+      />
+  </Grid>
+  <!--<ScrollView>
+    
+  
+      --><!--<Button
                 x:Name="InfoDeviceBtn"
                 Text="Информация об устройстве" 
                 SemanticProperties.Hint="go to InfoDevice page "
                 Clicked="ToInfoDevicePage"
-                HorizontalOptions="Fill" />-->
+                HorizontalOptions="Fill" />--><!--
 
-    </VerticalStackLayout>
-  </ScrollView>
+  </ScrollView>-->
 
 </ContentPage>

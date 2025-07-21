@@ -2,6 +2,7 @@
 using IrzGuardPro.MVVM.ViewModel;
 using IrzGuardPro.Utility;
 using System;
+using System.Reflection;
 using System.Security.AccessControl;
 
 namespace IrzGuardPro
@@ -76,7 +77,6 @@ namespace IrzGuardPro
             BindingContext = labelViewModel;
             ComboBox_AccessLevel.ItemsSource = labelViewModel.ListLevelAccess;
             ComboBox_AccessLevel.SelectedIndex = Hash_table.GetInt("ConfigFile.txt");
-
             timer_minute.Interval = TimeSpan.FromSeconds(1);
             //timer_hour.Interval = TimeSpan.FromHours(1);
 
@@ -98,6 +98,15 @@ namespace IrzGuardPro
         #endregion
 
         #region NOT USED
+
+
+        //private async void btn_info_Clicked(object sender, EventArgs e)
+        //{
+        //    //Дает версию соответсвующую exe-свойствам (в свойствах проекта Предоствален общий доступ MAUI/ Отображаймая версия приложения.)
+        //    await DisplayAlert("Информация", "Версия программы: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(), "OK");
+        //    //
+        //}
+
 
         ///// <summary>
         ///// Переход к информации об устройстве.

@@ -69,10 +69,6 @@ public partial class SecurityPage : ContentPage
     /// </summary>
     private void LoadPage()
     {
-        security.Password = Guard.Encrypt(DeviceSystem.GetCodeDevice());
-        // Не хотел через биндинг работать, иначе не работает. Не знаю почему :-(
-        LabelCode.Text = security.Password;
-        //
         if (ExistsVerificationFile())
         {
             App.Current.MainPage = new AppShell();

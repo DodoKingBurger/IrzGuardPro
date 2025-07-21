@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,6 +75,21 @@ namespace IrzGuardPro.MVVM.ViewModel
             }
         }
 
+        private string str_Version = string.Empty;
+
+        public string Version 
+        {
+            get => this.str_Version;
+            set 
+            {
+                if (!string.IsNullOrEmpty(value) && !label_str.Equals(value))
+                {
+                    this.str_Version = $"ООО ИРЗ ТЕК: {value}";
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #region Методы
 
         /// <summary>
@@ -86,5 +102,10 @@ namespace IrzGuardPro.MVVM.ViewModel
         }
 
         #endregion
+
+        public MainViewModel_Now() 
+        {
+            this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
     }
 }
