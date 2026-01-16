@@ -1,44 +1,53 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel ="clr-namespace:IrzGuardPro.MVVM.ViewModel"
              x:Class="IrzGuardPro.MVVM.View.InvatePage">
-  <ContentPage.BindingContext>
-    <viewmodel:InvateViewModel/>
-  </ContentPage.BindingContext>
-  <VerticalStackLayout>
-    <ScrollView>
-
-      <VerticalStackLayout
+	<ContentPage.BindingContext>
+		<viewmodel:InvateViewModel/>
+	</ContentPage.BindingContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<VerticalStackLayout
+			      Grid.Row="0"
             Padding="30,0"
             Spacing="25">
-        <Image
+			<Image
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="ИРЗ эмблема" />
-        <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+			<Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
               SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
-        </Picker>
-        <Label
+			</Picker>
+			<Label
                 x:Name="LabelReferenceCode"
                 Text = "{Binding  Invate_str}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
                 SemanticProperties.Description="Код для приглашения." />
-        <Label 
+			<Label 
                 Text="Код обновляется каждую 10 минуту"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="20"/>
-        <Button
+			<Button
                 x:Name="BackMainBtn"
                 Text="Назад"
                 SemanticProperties.Hint="Назад на главную страницу."
                 Clicked="ToBackMainPage"
                 HorizontalOptions="Fill" />
-      </VerticalStackLayout>
-    </ScrollView>
-  </VerticalStackLayout>
+		</VerticalStackLayout>
+		<Label 
+                Text="{Binding Now_date.Version}"
+                x:Name="Label_info"
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+	</Grid>
 </ContentPage>

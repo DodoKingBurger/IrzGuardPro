@@ -1,47 +1,57 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel ="clr-namespace:IrzGuardPro"
              x:Class="IrzGuardPro.SecurityPage">
-  <ContentPage.BindingContext>
-    <viewmodel:SecurityViewModel/>
-  </ContentPage.BindingContext>
-  <VerticalStackLayout>
-    <ScrollView>
-      <VerticalStackLayout
+	<ContentPage.BindingContext>
+		<viewmodel:SecurityViewModel/>
+	</ContentPage.BindingContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<VerticalStackLayout
+			      Grid.Row="0"
             Padding="30,0"
             Spacing="25">
-        <Image
+			<Image
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="ИРЗ эмблема." />
-        <Label
+			<Label
                 Text = "Сообщите нам данный код:"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35" />
-        <Label
+			<Label
                 x:Name="LabelCode"
                 Text = "{Binding Password}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
                 SemanticProperties.Description="Код для проверки доступа." />
-        <Entry 
+			<Entry 
                x:Name="EntryBox_code" Keyboard="Numeric"
                Text="{Binding EnteredCode}"
                TextChanged="EntryBox_code_TextChanged"
                Placeholder="Введите код доступа" FontFamily="Helvetica" 
                FontSize="28" MaxLength="4"/>
-        <Button
+			<Button
                 x:Name="CheckCodePass"
                 Text="Проверить" 
                 SemanticProperties.Hint="go to Mainpage "
                 HorizontalOptions="Fill" 
                 Command="{Binding CheckAllowingCommand}"
                 CommandParameter="{Binding Source = {x:Reference EntryBox_code} }"/>
-      </VerticalStackLayout>
-    </ScrollView>
-  </VerticalStackLayout>
+		</VerticalStackLayout>
+		<Label 
+                Text="{Binding Now_date.Version}"
+                x:Name="Label_info"
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+	</Grid>
 </ContentPage>

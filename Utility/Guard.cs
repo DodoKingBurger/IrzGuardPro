@@ -45,6 +45,27 @@ namespace IrzGuardPro.Utility
         /// <returns> Трехзначный пароль если есть такой уровень доступа, иначе 0.</returns>
         public static int GeneratePass(int LevelAccess, DateTime dateTime)
         {
+         
+            if(LevelAccess < 0)
+                return 0;
+            int Key_XOR = GenerationCode(LevelAccess, dateTime);
+            if (Key_XOR == Pass || Key_XOR == GenerationCode(LevelAccess,dateTime.AddHours(1)) || Key_XOR == GenerationCode(LevelAccess, dateTime.AddHours(-1)))
+                Key_XOR++;
+
+            //XOR с ключом.
+            Pass = Key_XOR;
+
+            return Pass;
+        }
+
+        /// <summary>
+        /// Генерирует код доступа по алгоритму.
+        /// </summary>
+        /// <param name="LevelAccess">Уровень доступа.</param>
+        /// <param name="dateTime">Дата и время, на какое время был запрос.</param>
+        /// <returns>код доступа.</returns>
+        public static int GenerationCode(int LevelAccess, DateTime dateTime) 
+        {
             if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
                 return 000;
 
@@ -60,13 +81,7 @@ namespace IrzGuardPro.Utility
 
             if (Key_XOR < 100)
                 Key_XOR += 100;
-            if (Key_XOR == Pass)
-                Key_XOR++;
-
-            //XOR с ключом.
-            Pass = Key_XOR;
-
-            return Pass;
+            return Key_XOR;
         }
 
         /// <summary>

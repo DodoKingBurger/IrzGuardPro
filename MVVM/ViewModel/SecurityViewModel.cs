@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,6 +63,13 @@ namespace IrzGuardPro
                     //OnPropertyChanged();
                 }
             }
+        }
+
+        private string str_Version = $"ИРЗ ТЕК: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
+
+        public string Version
+        {
+            get => this.str_Version;
         }
 
         #endregion

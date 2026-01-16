@@ -3,34 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel ="clr-namespace:IrzGuardPro.MVVM.ViewModel"
              x:Class="IrzGuardPro.MainPage">
-  <ContentPage.BindingContext>
-    <viewmodel:MainViewModel/>
-  </ContentPage.BindingContext>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="10*"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-    <VerticalStackLayout
+	<ContentPage.BindingContext>
+		<viewmodel:MainViewModel/>
+	</ContentPage.BindingContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<VerticalStackLayout
       Grid.Row="0"
             Padding="30,0"
-            Spacing="25">
-      <Image
+            Spacing="24">
+			<Image
                 Source="irz.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="ИРЗ эмблема" />
-      <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+			<Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
               SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
               SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged" />
-      <Label
+			<Label
                 x:Name="LabelCodePassFuture"
                 Text = "{Binding Future_data.Label_str}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                FontSize="28"
+                FontSize="27"
                 SemanticProperties.Description="Код доступа для будуйщего часа." />
-      <Label
+			<Label
                 x:Name="LabelCodePass"
                 Text="{Binding Now_date.Label_str}"
                 Style="{StaticResource SubHeadline}"
@@ -38,39 +38,43 @@
                 FontSize="35"
                 TextColor="Green"
                 SemanticProperties.Description="Код доступа на текущий момент." />
-      <Label
+			<Label
                 x:Name="LabelCodePassPast"
                 Text= "{Binding Past_data.Label_str}"
-                FontSize="28"
+                FontSize="27"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Код доступа для прошлого часа." />
 
-      <Button
+			<Button
                 x:Name="InvateBtn"
                 Text="Пригласи коллегу" 
                 SemanticProperties.Hint="go to Invate page "
                 Clicked="ToInvateBtnPage"
                 HorizontalOptions="Center" />
-    </VerticalStackLayout>
-    <Label 
+		</VerticalStackLayout>
+		<Label      
+			          FontSize="16"
                 Text="{Binding Now_date.Version}"
                 x:Name="Label_info"
                 Grid.Column="0"
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
+			          
       />
-  </Grid>
-  <!--<ScrollView>
+	</Grid>
+	<!--<ScrollView>
     
   
-      --><!--<Button
+      -->
+	<!--<Button
                 x:Name="InfoDeviceBtn"
                 Text="Информация об устройстве" 
                 SemanticProperties.Hint="go to InfoDevice page "
                 Clicked="ToInfoDevicePage"
-                HorizontalOptions="Fill" />--><!--
+                HorizontalOptions="Fill" />-->
+	<!--
 
   </ScrollView>-->
 

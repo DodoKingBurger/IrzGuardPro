@@ -39,6 +39,7 @@ namespace IrzGuardPro.MVVM.ViewModel
         /// </summary>
         public MainViewModel_Modified Past_data { get; set; }
 
+
         public MainViewModel() 
         {
             this.Now_date = new MainViewModel_Now();
