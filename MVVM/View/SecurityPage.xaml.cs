@@ -1,4 +1,4 @@
-using IrzGuardPro.MVVM.View;
+п»їusing IrzGuardPro.MVVM.View;
 using IrzGuardPro.MVVM.ViewModel;
 using IrzGuardPro.Utility;
 using IrzGuardPro;
@@ -14,28 +14,23 @@ using System;
 namespace IrzGuardPro;
 
 /// <summary>
-/// Страница для проверки доступа к приложению.
+/// РЎС‚СЂР°РЅРёС†Р° РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїР° Рє РїСЂРёР»РѕР¶РµРЅРёСЋ.
 /// </summary>
 public partial class SecurityPage : ContentPage
 {
-    #region Поля и свойства
+    #region РџРѕР»СЏ Рё СЃРІРѕР№СЃС‚РІР°
 
     /// <summary>
-    /// Таймер, для переключение страниц в случае прохождения успешной проверки.
+    /// РўР°Р№РјРµСЂ, РґР»СЏ РїРµСЂРµРєР»СЋС‡РµРЅРёРµ СЃС‚СЂР°РЅРёС† РІ СЃР»СѓС‡Р°Рµ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ СѓСЃРїРµС€РЅРѕР№ РїСЂРѕРІРµСЂРєРё.
     /// </summary>
     IDispatcherTimer timer_Load_Main = Application.Current.Dispatcher.CreateTimer();
 
-    /// <summary>
-    /// ViewModel.
-    /// </summary>
-    SecurityViewModel security = new();
-
     #endregion
 
-    #region Методы
+    #region РњРµС‚РѕРґС‹
 
     /// <summary>
-    /// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
+    /// РЎРѕР±С‹С‚РёРµ РЅР° РІРІРѕРґ С‚РµРєСЃС‚Р° РІ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ. РР·РјРµРЅРёС‚СЊ С†РІРµС‚ С‚РµРєСЃС‚Р° РїРѕСЃР»Рµ РІРІРѕРґР° РЅРµРїСЂР°РІРёР»СЊРЅРѕРіРѕ РїР°СЂРѕР»СЏ.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -46,9 +41,9 @@ public partial class SecurityPage : ContentPage
     }
 
     /// <summary>
-    /// Проверка верификации входного файла.
+    /// РџСЂРѕРІРµСЂРєР° РІРµСЂРёС„РёРєР°С†РёРё РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°.
     /// </summary>
-    /// <returns>True, если файл был найден и его содержимое совпадает с ключом.</returns>
+    /// <returns>True, РµСЃР»Рё С„Р°Р№Р» Р±С‹Р» РЅР°Р№РґРµРЅ Рё РµРіРѕ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃРѕРІРїР°РґР°РµС‚ СЃ РєР»СЋС‡РѕРј.</returns>
     public bool ExistsVerificationFile()
     {
         try
@@ -59,117 +54,46 @@ public partial class SecurityPage : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Ошибка", ex.Message, "OK");
+            DisplayAlert("РћС€РёР±РєР°", ex.Message, "OK");
             return false;
         }
     }
 
     /// <summary>
-    /// Загрузка страницы.
+    /// Р—Р°РіСЂСѓР·РєР° СЃС‚СЂР°РЅРёС†С‹.
     /// </summary>
-    private void LoadPage()
+    private async void LoadPage()
     {
+        string str = Hash_table.mainDir;
         if (ExistsVerificationFile())
         {
-            App.Current.MainPage = new AppShell();
-            //await Navigation.PushAsync(new MainPage());
+            //App.Current.MainPage = new AppShell();
+            //App.Current.MainPage = new NavigationPage(new AppShell());
+            await Navigation.PushModalAsync(new MainPage());
         }           
-        #if WINDOWS
-            timer_Load_Main.Stop();
-        #endif
+        //#if WINDOWS
+        //    timer_Load_Main.Stop();
+        //#endif
     }
 
     #endregion
 
-    #region Конструкторы 
+    #region РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ 
 
     public SecurityPage()
 	{
-        Loaded += (s, e) => LoadPage();
-        BindingContext = security;
         InitializeComponent();
-        timer_Load_Main.Interval = TimeSpan.FromSeconds(2);
-        // Почему то на Windows не работает смена главной страницы сразу, а ток через время.
-#if WINDOWS
-            timer_Load_Main.Tick += (s, e) => LoadPage();
-               timer_Load_Main.Start();
-#else
-        Task.Delay(1000);
+//        // РџРѕС‡РµРјСѓ С‚Рѕ РЅР° Windows РЅРµ СЂР°Р±РѕС‚Р°РµС‚ СЃРјРµРЅР° РіР»Р°РІРЅРѕР№ СЃС‚СЂР°РЅРёС†С‹ СЃСЂР°Р·Сѓ, Р° С‚РѕРє С‡РµСЂРµР· РІСЂРµРјСЏ.
+//#if WINDOWS
+//        Task.Delay(1000);
+////            timer_Load_Main.Tick += (s, e) => LoadPage();
+////            timer_Load_Main.Start();
+//#else
+//        //        Task.Delay(1000);
+//        //        LoadPage();
+//#endif
         LoadPage();
-#endif
     }
 
     #endregion
-
-    #region NOT USED
-
-    ///// <summary>
-    ///// Переход к страничке с реферальным кодом.
-    ///// </summary>
-    ///// <param name="sender"></param>
-    ///// <param name="e"></param>
-    ////private void CheckingCodePass(object? sender, EventArgs e)
-    ////{
-    ////    try
-    ////    {
-    ////        if (Guard.EqualsKey(EntryBox_code.Text))
-    ////        {
-    ////            if (!Hash_table.Exists("UniqueKey.config"))
-    ////                Hash_table.CreateFile("UniqueKey.config");
-    ////            Hash_table.SetString("UniqueKey.config", Guard.Encrypt(DeviceSystem.GetCodeDevice()));
-    ////            App.Current.MainPage = new AppShell();
-    ////        }
-    ////        else
-    ////        {
-    ////            EntryBox_code.TextColor = Colors.Red;
-    ////        }
-    ////    }
-    ////    catch (Exception ex)
-    ////    {
-    ////        DisplayAlert("Ошибка",ex.Message,"OK");
-    ////    }
-    //}
-    //        Title = "Accsess";
-    //        Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
-
-    //        StringBuilder sb = new StringBuilder();
-
-    //        sb.AppendLine($"Model:{DeviceInfo.Current.Model}");
-    //        sb.AppendLine($"Manufacturer:{DeviceInfo.Current.Manufacturer}");
-    //        sb.AppendLine($"Name:{DeviceInfo.Current.Name}");
-    //        sb.AppendLine($"OS Version:{DeviceInfo.Current.VersionString}");
-    //        sb.AppendLine($"Idiom:{DeviceInfo.Current.Idiom}");
-    //        sb.AppendLine($"Platform:{DeviceInfo.Current.Platform}");
-
-
-    //        bool isVirtual = DeviceInfo.Current.DeviceType switch
-    //        {
-    //            DeviceType.Physical => false,
-    //            DeviceType.Virtual => true,
-    //            _ => false,
-    //        };
-
-
-    //        string deviceID = "0000 0000 0000 0000";
-    //#if ANDROID
-    //             deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-
-    //#elif IOS
-    //            deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
-    //#elif WINDOWS
-    //            deviceID = NetworkInterface.GetAllNetworkInterfaces()
-    //                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-    //                .Select(nic => nic.GetPhysicalAddress().ToString())
-    //                .FirstOrDefault();
-    //#endif
-
-    //        sb.AppendLine($"deviceID: {deviceID}");
-    //        sb.AppendLine($"Virtual device? {isVirtual}");
-
-    //        Label label = new Label { Text = sb.ToString() };
-
-    // переход с обычной странницы назад
-    //backButton.Clicked += async (o, e) => await Navigation.PopAsync(true);
-    #endregion
-
 }

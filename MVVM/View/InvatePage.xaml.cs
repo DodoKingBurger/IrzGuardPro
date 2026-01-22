@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using Microsoft.Maui.Controls;
 using IrzGuardPro;
 using IrzGuardPro.MVVM.ViewModel;
@@ -8,24 +8,24 @@ namespace IrzGuardPro.MVVM.View;
 
 public partial class InvatePage : ContentPage
 {
-    #region Поля и свойства
+    #region РџРѕР»СЏ Рё СЃРІРѕР№СЃС‚РІР°
 
     /// <summary>
-    /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
+    /// ViewModel РЅСѓ С‚РёРї РєРѕСЃСЏС‡РЅС‹Р№, РЅРѕ РІР°СЂРёР°РЅС‚ РњРѕРґРµР»СЊ РѕРЅ РЅРµ РІРёРґРёС‚ Р·РЅР°С‡РёС‚ СЂР°Р±РѕС‚Р°РµС‚ ))))
     /// </summary>
     public InvateViewModel labelViewModel = new InvateViewModel();
 
     /// <summary>
-    /// Таймер для обновления времени.
+    /// РўР°Р№РјРµСЂ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РІСЂРµРјРµРЅРё.
     /// </summary>
     IDispatcherTimer timer_time = Application.Current.Dispatcher.CreateTimer();
 
     #endregion
 
-    #region Методы
+    #region РњРµС‚РѕРґС‹
 
     /// <summary>
-    /// Событие по выбору в combobox какого-то уровня доступа.
+    /// РЎРѕР±С‹С‚РёРµ РїРѕ РІС‹Р±РѕСЂСѓ РІ combobox РєР°РєРѕРіРѕ-С‚Рѕ СѓСЂРѕРІРЅСЏ РґРѕСЃС‚СѓРїР°.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -36,24 +36,27 @@ public partial class InvatePage : ContentPage
     }
 
     /// <summary>
-    /// Возвращает на страницу назад.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РЅР°Р·Р°Рґ.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private async void ToBackMainPage(object? sender, EventArgs e)
     {
-        await Navigation.PopAsync(true);
+        await Navigation.PopModalAsync(true);
     }
 
     /// <summary>
-    /// Событие тик таймера. Визуальное отображения кода и времени на экран устройства.
-    /// К соэалению через загрузку XAML кода.
+    /// РЎРѕР±С‹С‚РёРµ С‚РёРє С‚Р°Р№РјРµСЂР°. Р’РёР·СѓР°Р»СЊРЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєРѕРґР° Рё РІСЂРµРјРµРЅРё РЅР° СЌРєСЂР°РЅ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
+    /// Рљ СЃРѕСЌР°Р»РµРЅРёСЋ С‡РµСЂРµР· Р·Р°РіСЂСѓР·РєСѓ XAML РєРѕРґР°.
     /// </summary>
     private void ViewReferenceCode_time()
     {
         labelViewModel.DateTime_Create = DateTime.Now;
     }
 
+    /// <summary>
+    /// Р—Р°РіСЂСѓР·РєР° СЃС‚СЂР°РЅРёС†С‹.
+    /// </summary>
     public void LoadPage()
     {
         BindingContext = labelViewModel;
@@ -68,7 +71,7 @@ public partial class InvatePage : ContentPage
 
     #endregion
 
-    #region Конструкторы
+    #region РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 
     public InvatePage()
     {
@@ -81,7 +84,7 @@ public partial class InvatePage : ContentPage
     #region NOTUSED
 
     ///// <summary>
-    ///// Таймер для обновления пароля.
+    ///// РўР°Р№РјРµСЂ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ.
     ///// </summary>
     //IDispatcherTimer timer_password = Application.Current.Dispatcher.CreateTimer();
 
@@ -91,7 +94,7 @@ public partial class InvatePage : ContentPage
     //    Button backButton = new Button { Text = "Back", HorizontalOptions = LayoutOptions.Start };
     //    Label label = new Label { Text = "InvatePage" };
 
-    //    // переход с обычной странницы назад
+    //    // РїРµСЂРµС…РѕРґ СЃ РѕР±С‹С‡РЅРѕР№ СЃС‚СЂР°РЅРЅРёС†С‹ РЅР°Р·Р°Рґ
     //    backButton.Clicked += async (o, e) => await Navigation.PopAsync(true);
     //    Content = new StackLayout { Children = { label, backButton } };
     //}

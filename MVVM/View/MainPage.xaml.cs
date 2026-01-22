@@ -55,7 +55,7 @@ namespace IrzGuardPro
         /// <param name="e"></param>
         private async void ToInvateBtnPage(object? sender, EventArgs e)
         {
-            await Navigation.PushAsync(new InvatePage());
+            await Navigation.PushModalAsync(new InvatePage());
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace IrzGuardPro.Utility
         /// <summary>
         /// Дирректория в которой расположен .exe.
         /// </summary>
-        private static readonly string mainDir = FileSystem.Current.AppDataDirectory;
+        public static readonly string mainDir = FileSystem.Current.AppDataDirectory;
 
         /// <summary>
         /// Возвращает строку по названию файла.
