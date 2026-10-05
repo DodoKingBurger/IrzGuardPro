@@ -82,28 +82,6 @@ namespace IrzGuardPro.Utility
         }
 
         /// <summary>
-        /// Генератор код для активации в IrzGuard.
-        /// </summary>
-        /// <param name="LevelAccess">Уровень доступа (0..2)</param>
-        /// <param name="dateTime">Дата и время для генерации</param>
-        /// <returns> Трехзначный код если есть такой уровень доступа, иначе 0.</returns>
-        public static int GenerateReferenceCode(int LevelAccess, DateTime dateTime)
-        {
-            if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
-                return 000;
-
-            int Base = (dateTime.Date.Year % 100 * dateTime.Date.Month * dateTime.Day * dateTime.Hour * (dateTime.Minute / 10)) % 1000;
-            int Key = (dateTime.Date.Year % 100 + dateTime.Date.Month + dateTime.Day + dateTime.Hour + dateTime.Minute / 10) % 1000;
-
-            //Сдвиг по уровню доступа
-            int ditgit1 = (Base / 100 + LevelAccess) % 10;
-            int ditgit2 = (Base / 10 % 10 + LevelAccess) % 10;
-            int ditgit3 = (Base % 10 + LevelAccess) % 10;
-
-            return (ditgit1 * 100 + ditgit2 * 10 + ditgit3 ^ Key) % 1000;
-        }
-
-        /// <summary>
         /// Шифрования кода устройства. Ответ на первый код.
         /// </summary>
         /// <param name="text">текс для шифрования. Код устройства.</param>

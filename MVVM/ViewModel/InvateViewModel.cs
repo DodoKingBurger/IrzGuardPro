@@ -43,7 +43,7 @@ namespace IrzGuardPro.MVVM.ViewModel
                 {
                     this.resources.DateTimeCreated = value;
                     int save_LevelAccess = Hash_table.GetInt("ConfigFile.txt");
-                    this.Password = Guard.GenerateReferenceCode(save_LevelAccess, this.resources.DateTimeCreated);
+                    this.Password = Guard.GenerationCode(save_LevelAccess, this.resources.DateTimeCreated);
                     Invate_str = $"{value.ToString()}";
                 }
             }
